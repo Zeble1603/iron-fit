@@ -4,6 +4,10 @@ const mongoose = require("mongoose");
 const saltRounds = 10;
 const User = require("../models/User.model");
 
+router.get("/", (req, res, next) => {
+  res.render("index");
+});
+
 router.get("/signup", (req, res, next) => res.render("auth/signup"));
 
 router.post("/signup", (req, res, next) => {

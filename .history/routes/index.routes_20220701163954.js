@@ -4,6 +4,9 @@ const authRoutes = require("./auth.routes");
 /* GET home page */
 router.get("/", (req, res, next) => {
   res.render("index");
+  res.json("All good in here");
 });
+
+router.use("/auth", authRoutes);
 
 module.exports = router;

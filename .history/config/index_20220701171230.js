@@ -23,10 +23,10 @@ const MongoStore = require("connect-mongo");
 
 // Connects the mongo uri to maintain the same naming structure
 const MONGO_URI = require("../utils/consts");
-const path = require("path");
-const favicon = require("serve-favicon");
+
 // Middleware configuration
 module.exports = (app) => {
+
   // Because this is a server that will accept requests from outside and it will be hosted ona server with a `proxy`, express needs to know that it should trust that setting.
   // Services like heroku use something called a proxy and you need to add this to your server
   app.set("trust proxy", 1);
@@ -43,15 +43,16 @@ module.exports = (app) => {
   // In development environment the app logs
   app.use(logger("dev"));
 
-  //Normalizes the path to the views folder
-  app.set("views", path.join(__dirname, "..", "views"));
+
+  / Normalizes the path to the views folder
+  app.set(“views”, path.join(__dirname, “..“, “views”));
   // Sets the view engine to handlebars
-  app.set("view engine", "hbs");
+  app.set(“view engine”, “hbs”);
   // AHandles access to the public folder
-  app.use(express.static(path.join(__dirname, "..", "public")));
+  app.use(express.static(path.join(__dirname, “..“, “public”)));
   // Handles access to the favicon
   app.use(
-    favicon(path.join(__dirname, "..", "public", "images", "favicon.ico"))
+    favicon(path.join(__dirname, “..“, “public”, “images”, “favicon.ico”))
   );
   // To have access to `body` property in the request
   app.use(express.json());

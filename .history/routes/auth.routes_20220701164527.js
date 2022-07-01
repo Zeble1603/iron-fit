@@ -3,8 +3,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const saltRounds = 10;
 const User = require("../models/User.model");
-
-router.get("/signup", (req, res, next) => res.render("auth/signup"));
+router.get("/signup", (req, res, next) => res.render("auth/signup.hbs"));
 
 router.post("/signup", (req, res, next) => {
   const { username, password } = req.body;
