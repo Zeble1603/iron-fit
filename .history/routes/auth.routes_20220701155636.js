@@ -1,10 +1,15 @@
-//CONECTAR CON APP.JS
-
 const router = require("express").Router();
+
+// ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+
+// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
+
+// Require the User model in order to interact with the database
 const User = require("../models/User.model");
+
 router.get("/signup", (req, res, next) => res.render("auth/signup"));
 
 router.post("/signup", (req, res, next) => {
@@ -27,6 +32,11 @@ router.post("/signup", (req, res, next) => {
       // Encrypt the password
       const salt = bcrypt.genSaltSync(bcryptSalt);
       const hashPass = bcrypt.hashSync(password, salt);
+
+      //
+      // Save the user in DB
+      //
+
       const newUser = new User({
         username,
         password: hashPass,

@@ -1,0 +1,19 @@
+<h2>Create a USER</h2>
+
+<form action="/signup" method="post">
+  <label>
+    Username:
+    <input type="text" name="username" placeholder="ironhacker" />
+  </label>
+
+  <label>
+    Password:
+    <input type="password" name="password" placeholder="********" />
+  </label>
+
+  <button type="submit"> Signup </button>
+  {{#if errorMessage}}
+    <div class="error-message">{{errorMessage}}</div>
+  {{/if}}
+
+</form>

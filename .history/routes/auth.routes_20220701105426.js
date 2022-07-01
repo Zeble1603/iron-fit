@@ -1,47 +1,17 @@
-//CONECTAR CON APP.JS
-
 const router = require("express").Router();
+
+// ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+
+// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
+
+// Require the User model in order to interact with the database
 const User = require("../models/User.model");
-router.get("/signup", (req, res, next) => res.render("auth/signup"));
-
-router.post("/signup", (req, res, next) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    res.render("auth/signup", {
-      errorMessage: "Indicate username and password",
-    });
-    return;
-  }
-  User.findOne({ username })
-    .then((user) => {
-      // 2. Check user does not already exist
-      if (user !== null) {
-        res.render("auth/signup", { message: "The username already exists" });
-        return;
-      }
-
-      // Encrypt the password
-      const salt = bcrypt.genSaltSync(bcryptSalt);
-      const hashPass = bcrypt.hashSync(password, salt);
-      const newUser = new User({
-        username,
-        password: hashPass,
-      });
-
-      newUser
-        .save()
-        .then(() => res.redirect("/"))
-        .catch((err) => next(err));
-    })
-    .catch((err) => next(err));
-});
 
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
-/* const isLoggedOut = require("../middleware/isLoggedOut");
+const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/loggedin", (req, res) => {
@@ -73,7 +43,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
     });
   }
-  
+  */
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
@@ -164,6 +134,6 @@ router.get("/logout", isLoggedIn, (req, res) => {
     }
     res.json({ message: "Done" });
   });
-}); */
+});
 
 module.exports = router;

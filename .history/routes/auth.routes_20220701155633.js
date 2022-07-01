@@ -1,10 +1,15 @@
-//CONECTAR CON APP.JS
-
 const router = require("express").Router();
+
+// ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+
+// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
 const saltRounds = 10;
+
+// Require the User model in order to interact with the database
 const User = require("../models/User.model");
+
 router.get("/signup", (req, res, next) => res.render("auth/signup"));
 
 router.post("/signup", (req, res, next) => {
@@ -15,29 +20,34 @@ router.post("/signup", (req, res, next) => {
       errorMessage: "Indicate username and password",
     });
     return;
-  }
-  User.findOne({ username })
-    .then((user) => {
-      // 2. Check user does not already exist
-      if (user !== null) {
-        res.render("auth/signup", { message: "The username already exists" });
-        return;
-      }
+  } User.findOne({ username })
+  .then(user => {
+    // 2. Check user does not already exist
+    if (user !== null) {
+      res.render('auth/signup', { message: 'The username already exists' });
+      return;
+    }
 
-      // Encrypt the password
-      const salt = bcrypt.genSaltSync(bcryptSalt);
-      const hashPass = bcrypt.hashSync(password, salt);
-      const newUser = new User({
-        username,
-        password: hashPass,
-      });
+    // Encrypt the password
+    const salt = bcrypt.genSaltSync(bcryptSalt);
+    const hashPass = bcrypt.hashSync(password, salt);
 
-      newUser
-        .save()
-        .then(() => res.redirect("/"))
-        .catch((err) => next(err));
-    })
-    .catch((err) => next(err));
+    //
+    // Save the user in DB
+    //
+
+    const newUser = new User({
+      username,
+      password: hashPass
+    });
+
+    newUser
+      .save()
+      .then(() => res.redirect('/'))
+      .catch(err => next(err));
+  })
+  .catch(err => next(err));
+});
 });
 
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
