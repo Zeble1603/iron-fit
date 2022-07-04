@@ -139,9 +139,7 @@ h1 {
   gap: 20px;
 }
 .account-message {
+  margin: 0 auto;
   margin-top: 50px;
   text-align: center;
-}
-.account-message a {
-  border-radius: 10px;
 }

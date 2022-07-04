@@ -40,8 +40,7 @@ ul li span {
   font-size: 4rem;
 }
 ul li a,
-.form-container button,
-.account-message a {
+.form-container button {
   padding: 5px 15px;
   outline: none;
   background-color: #ffff00;
@@ -137,11 +136,4 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 20px;
-}
-.account-message {
-  margin-top: 50px;
-  text-align: center;
-}
-.account-message a {
-  border-radius: 10px;
 }
