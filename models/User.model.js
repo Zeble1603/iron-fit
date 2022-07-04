@@ -6,10 +6,10 @@ const userSchema = new Schema(
       unique: true,
     },
     password: String,
-    amigos: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    rutinas: [{ type: mongoose.Schema.Types.ObjectId, ref: "Rutinas" }], //tomo todas las rutinas
+    amigos: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    rutinas: [{ type: Schema.Types.ObjectId, ref: "Rutinas" }], //tomo todas las rutinas
     rutinasRealizadas: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Rutinas" },
+      { type: Schema.Types.ObjectId, ref: "Rutinas" },
     ], //tomo solo las rutinas con booleano true
   },
   {

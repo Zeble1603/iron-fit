@@ -12,7 +12,7 @@ class ApiService {
     }
 
     getAllExercices = () => {
-        return this.api.get('/');
+        return this.api.get('');
       };
     
     getAllBodyParts = () => {
@@ -31,9 +31,9 @@ class ApiService {
         return this.api.get(`/name/${name}`);
     }
 
-    getTargetMuscles = () => {
+    /*getTargetMuscles = () => {
         return this.api.get(`/targetList`);
-    }
+    }*/
 
     getExercicebyTarget = (target) => {
         return this.api.get(`/target/${target}`);
