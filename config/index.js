@@ -46,6 +46,15 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
 
+  const path = require("path");
+
+  // Normalizes the path to the views folder
+  app.set("views", path.join(__dirname, "..", "views"));
+  // Sets the view engine to handlebars
+  app.set("view engine", "hbs");
+  // Handles access to the public folder
+  app.use(express.static(path.join(__dirname, "..", "public")));
+
   // ℹ️ Middleware that adds a "req.session" information and later to check that you are who you say you are 😅
   app.use(
     session({
@@ -68,3 +77,4 @@ module.exports = (app) => {
     next();
   });
 };
+
