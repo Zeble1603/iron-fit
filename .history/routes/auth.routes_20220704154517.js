@@ -14,6 +14,9 @@ const User = require("../models/User.model");
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+/* router.get("/loggedin", (req, res) => {
+  res.json(req.user);
+}); */
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
 });
@@ -24,7 +27,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
   if (!username) {
     return res
       .status(400)
-      .render("auth/signup", { errorMessage: "Please provide your username." });
+      .json({ errorMessage: "Please provide your username." });
   }
 
   if (password.length < 8) {
@@ -32,13 +35,25 @@ router.post("/signup", isLoggedOut, (req, res) => {
       errorMessage: "Your password needs to be at least 8 characters long.",
     });
   }
+
+  //   ! This use case is using a regular expression to control for special characters and min length
+  /*
+  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
+  if (!regex.test(password)) {
+    return res.status(400).json({
+      errorMessage:
+        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+    });
+  }*/
+
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
     // If the user is found, send the message username is taken
     if (found) {
-      return res
-        .status(400)
-        .render("auth/signup", { errorMessage: "Username already taken." });
+      return res.render("auth/signup", {
+        errorMessage: "username is taken",
+      });
     }
 
     // if user is not found, create a new user - start with hashing the password
@@ -75,7 +90,6 @@ router.post("/signup", isLoggedOut, (req, res) => {
       });
   });
 });
-
 router.get("/login", isLoggedOut, (req, res) => {
   res.render("auth/login");
 });
@@ -114,7 +128,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
             .status(400)
             .render("auth/login", { errorMessage: "Wrong credentials." });
         }
-        req.session.user = user;
+        req.session.currentUser = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/");
       });
@@ -127,6 +141,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
       return res.status(500).render("login", { errorMessage: err.message });
     });
 });
+
 router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {

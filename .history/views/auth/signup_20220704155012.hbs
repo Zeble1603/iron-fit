@@ -1,4 +1,4 @@
-<h2 class="user-title">Create a USER</h2>
+{{! <h2 class="user-title">Create a USER</h2>
 
 <form action="/signup" method="post" class="form-container">
   <div>
@@ -22,4 +22,20 @@
     <a href="/login">Login</a>
   </p>
 
+</form> }}
+<form action="/auth/signup" method="POST">
+  <label>
+    Username
+    <input type="text" name="username" />
+  </label>
+  <label>
+    Password
+    <input type="password" name="password" />
+  </label>
+
+  <button type="submit">Submit</button>
 </form>
+
+{{#if errorMessage}}
+  <p class="error">{{errorMessage}}</p>
+{{/if}}

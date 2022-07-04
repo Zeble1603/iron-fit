@@ -75,7 +75,6 @@ router.post("/signup", isLoggedOut, (req, res) => {
       });
   });
 });
-
 router.get("/login", isLoggedOut, (req, res) => {
   res.render("auth/login");
 });
@@ -114,7 +113,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
             .status(400)
             .render("auth/login", { errorMessage: "Wrong credentials." });
         }
-        req.session.user = user;
+        req.session.currentUser = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
         return res.redirect("/");
       });
@@ -127,6 +126,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
       return res.status(500).render("login", { errorMessage: err.message });
     });
 });
+
 router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
