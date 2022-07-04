@@ -4,6 +4,7 @@ require("dotenv/config");
 
 // ℹ️ Connects to the database
 require("./db");
+const hbs = require("hbs");
 
 // Handles http requests (express is node js framework)
 // https://www.npmjs.com/package/express
@@ -13,6 +14,9 @@ const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
+const projectName = "iron-fit";
+const capitalized = (string) =>
+  string[0].toUpperCase() + string.slice(1).toLowerCase();
 
 // serve public files 
 app.use(express.static('public'))
@@ -20,14 +24,19 @@ app.use(express.static('public'))
 
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
-const allRoutes = require("./routes/index.routes");
-app.use("/api", allRoutes);
-
 const exercicesRoutes = require("./routes/exercices.routes")
 app.use("/", exercicesRoutes);
 
 
 
+app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
+// 👇 Start handling routes here
+// Contrary to the views version, all routes are controlled from the routes/index.js
+const allRoutes = require("./routes/index.routes");
+app.use("/", allRoutes);
+
+const auth = require("./routes/auth.routes");
+app.use("/", auth);
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
