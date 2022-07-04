@@ -137,6 +137,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
     res.redirect("/");
   });
 });
+
 router.get("/profile", isLoggedIn, (req, res) => {
   res.render("auth/profile");
 });
