@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 62.5%;
+  font-family: "DM Sans", sans-serif;
+  scroll-behavior: smooth;
+}
+body {
+  background: #212121;
+  width: 100%;
+  height: 100vh;
+}
+ul {
+  width: 100%;
+}
+ul li {
+  width: 85%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+  color: #ffff00;
+  font-size: 2.2rem;
+}
+ul li button {
+  padding: 5px 15px;
+  outline: none;
+  background-color: #ffff00;
+  border: 2px solid black;
+  font-size: 2rem;
+  font-weight: 500;
+}
+ul li span {
+  font-size: 4rem;
+}
+ul li a {
+  padding: 5px 15px;
+  outline: none;
+  background-color: #ffff00;
+  color: black;
+  border: 2px solid black;
+  text-decoration: none;
+}
+ul li a:visited {
+  text-decoration: none;
+}
+ul li a:hover,
+ul li button:hover {
+  background-color: black;
+  border: 2px solid #ffff00;
+  color: #ffff00;
+}
+.user-title {
+  margin-top: 40px;
+  font-size: 2.5rem;
+  color: #ffff00;
+  text-align: center;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
