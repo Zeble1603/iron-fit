@@ -4,7 +4,6 @@ const User = require("../models/User.model");
 const ApiService = require("../services/api.service");
 const myApiService = new ApiService();
 const Rutina = require("../models/Rutina.model"); 
-const { response } = require("../app");
 
 router.post('/new-rutina', (req,res,next)=>{
     debugger
