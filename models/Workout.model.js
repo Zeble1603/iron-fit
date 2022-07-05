@@ -6,7 +6,8 @@ const workoutSchema = new Schema(
         type:String,
         repetition:Number,
         weight:Number,
-        time:Number
+        time:Number,
+        type:String
     },
     {
       timestamps: true,

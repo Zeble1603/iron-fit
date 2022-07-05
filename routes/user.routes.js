@@ -14,8 +14,4 @@ router.get("/profile", isLoggedIn, (req, res) => {
   })
 });
 
-router.get("/exercise-detail", isLoggedIn, (req, res) => {
-  res.render("exercices/exercise-detail");
-});
-
 module.exports = router;

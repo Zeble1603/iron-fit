@@ -41,15 +41,13 @@
         <td id="bodyPart">{{bodyPart}}</td>
         <td id="targetMuscle">{{target}}</td>
         <td id="equipment">{{equipment}}</td>
-        {{#if rutinaId}}
           <td id="button-addWorkout">
-            <form action="/add/{{rutinaId}}" method="POST">
+            <form action="/add/{{id}}/{{../rutinaId}}" method="POST">
               <button class="button is-primary is-outlined is-responsive">
                 Add to rutina
               </button>
             </form>
           </td>
-        {{/if}}
       </tr>
     {{/each}}
   </tbody>

@@ -36,7 +36,7 @@ router.get("/exercises/:rutinaId", (req, res, next) => {
                     allBodyParts: allBodyParts.data,
                     allTargetMuscles: allTargetMuscles.data,
                     allEquipments : allEquipments.data,
-                    rutinaId
+                    rutinaId:rutinaId,
                   });
                 })
           })
@@ -53,15 +53,10 @@ router.get("/exercises/exercise-detail/:id", (req, res, next) => {
   myApiService
     .getExerciseById(id)
     .then((exercise) => {
-      console.log(exercise.data);
       res.render("exercises/exercise-detail", { exercise: exercise.data });
     })
     .catch((err) => {
       next(err);
     })
-    .catch((err) => {
-      next(err);
-    });
 });
-
 module.exports = router;
