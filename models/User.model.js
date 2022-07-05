@@ -6,7 +6,10 @@ const userSchema = new Schema(
       unique: true,
     },
     password: String,
-    admin: Boolean,
+    admin: {
+      type: Boolean,
+      default: false,
+    },
     amigos: [{ type: Schema.Types.ObjectId, ref: "User" }],
     rutinas: [{ type: Schema.Types.ObjectId, ref: "Rutina" }], //tomo todas las rutinas
     rutinasRealizadas: [{ type: Schema.Types.ObjectId, ref: "Rutina" }], //tomo solo las rutinas con booleano true

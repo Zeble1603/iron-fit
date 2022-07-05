@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>{{title}}</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
 
   <body><ul style="list-style: none;">
       <li id="to-right">
-        <a href="/signup">Signup</a>
-        <span> | </span>
-        <a href="/login">Login</a>
-        <span> | </span>
-        <a href="/logout">Logout</a>
-       
+        <a href="/">Home</a>
+        <a href="/exercises">Exercises</a>
+        {{#if userInSession}}
+          <a href="/profile">My Profile</a>
+          <a href="/logout">Logout</a>
+        {{else}}
+          <a href="/signup">Signup</a>
+          <a href="/login">Login</a>
+        {{/if}}
+
       </li>
-      </ul>
+    </ul>
 
     {{{body}}}
 
