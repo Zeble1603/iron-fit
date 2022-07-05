@@ -11,7 +11,7 @@ class ApiService {
           });
     }
 
-    getAllExercices = () => {
+    getAllExercises = () => {
         return this.api.get('');
       };
     
@@ -23,7 +23,7 @@ class ApiService {
         return this.api.get(`/bodyPart/${bodyPart}`);
     }
     
-    getExerciceById = (id) => {
+    getExerciseById = (id) => {
         return this.api.get(`/exercise/${id}`);
     }
 

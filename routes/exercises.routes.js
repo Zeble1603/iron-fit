@@ -6,9 +6,17 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/exercises", (req, res, next) => {
   myApiService
-    .getAllExercices()
-    .then((exercisesList) => {
-      res.render("exercises/exercises", { exercisesList: exercisesList.data });
+    .getAllBodyParts()
+    .then((allBodyParts) => {
+      myApiService.getTargetMuscles().then((allTargetMuscles) => {
+        myApiService.getAllExercises().then((exercisesList) => {
+          res.render("exercises/exercises", {
+            exercisesList: exercisesList.data,
+            allBodyParts: allBodyParts.data,
+            allTargetMuscles: allTargetMuscles.data,
+          });
+        });
+      });
     })
     /*.then((allBodyParts)=>{ 
         myApiService.getTargetMuscles()
@@ -24,10 +32,15 @@ router.get("/exercises", (req, res, next) => {
 
 router.get("/exercises/exercise-detail/:id", (req, res, next) => {
   const { id } = req.params;
+  console.log(id);
   myApiService
-    .getExerciceById(id)
+    .getExerciseById(id)
     .then((exercise) => {
+      console.log(exercise.data);
       res.render("exercises/exercise-detail", { exercise: exercise.data });
+    })
+    .catch((err) => {
+      next(err);
     })
     .catch((err) => {
       next(err);

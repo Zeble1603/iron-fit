@@ -14,6 +14,9 @@
       <td><input type="text" placeholder="Barbell bench press" /></td>
       <td>
         <select name="bodyPart" id="bodyPart">
+          {{#each allBodyParts}}
+            <option value={{this}}>{{this}}</option>
+          {{/each}}
         </select>
       </td>
       <td><select name="bodyPart" id="bodyPart"></select></td>
