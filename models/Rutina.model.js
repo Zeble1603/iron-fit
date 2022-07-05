@@ -4,7 +4,7 @@ const rutinaSchema = new Schema(
     {
         name:String,
         timer: Number,
-        done:Boolean,
+        done: Boolean,
         workout: [{ type: Schema.Types.ObjectId, ref: "Workout" }],
     },
     {
