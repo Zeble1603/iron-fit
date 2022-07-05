@@ -17,6 +17,7 @@ router.get("/exercises", (req, res, next) => {
               allBodyParts: allBodyParts.data,
               allTargetMuscles: allTargetMuscles.data,
               allEquipments: allEquipments.data,
+              loggedUser: req.session.user,
             });
           });
         });
