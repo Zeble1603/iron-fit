@@ -14,10 +14,7 @@ router.post('/new-rutina', (req,res,next)=>{
             name:rutinaName,
         })
         .then((newRutina)=>{
-            console.log('USER:',dbUser)
-            console.log('RUTINA:',newRutina)
             dbUser.rutinas.push(newRutina)
-            console.log('User.rutinas', dbUser.rutinas)
             dbUser.save()
             res.redirect(`/profile`)
         })
