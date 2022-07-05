@@ -18,16 +18,13 @@ const projectName = "iron-fit";
 const capitalized = (string) =>
   string[0].toUpperCase() + string.slice(1).toLowerCase();
 
-// serve public files 
-app.use(express.static('public'))
-
+// serve public files
+app.use(express.static("public"));
 
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
-const exercicesRoutes = require("./routes/exercices.routes")
+const exercicesRoutes = require("./routes/exercices.routes");
 app.use("/", exercicesRoutes);
-
-
 
 app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
 // 👇 Start handling routes here
@@ -37,6 +34,8 @@ app.use("/", allRoutes);
 
 const auth = require("./routes/auth.routes");
 app.use("/", auth);
+const user = require("./routes/user.routes");
+app.use("/", user);
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
