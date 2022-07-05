@@ -8,12 +8,11 @@ html {
   font-size: 62.5%;
   font-family: "DM Sans", sans-serif;
   scroll-behavior: smooth;
-  height: 100%;
+  background: #212121;
 }
 body {
   background: #212121;
   width: 100%;
-  height: 100%;
 }
 ul {
   width: 100%;
@@ -241,8 +240,9 @@ h3 {
 }
 .box-detail {
   width: 80%;
-  height: 400px;
+  height: auto;
   margin: 0 auto;
+  padding: 50px 0px;
   border: 2px solid #fff000;
   display: flex;
   flex-direction: column;
@@ -250,9 +250,16 @@ h3 {
   align-items: center;
   color: #fff000;
   margin-top: 100px;
+  gap: 50px;
+  margin-bottom: 100px;
+}
+.box-detail img {
+  border-radius: 50px;
 }
 .box-detail .card-title {
-  font-size: 2rem;
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 3px;
 }
 .detail-container {
   display: flex;
@@ -264,5 +271,6 @@ h3 {
 .answer-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   font-size: 2rem;
 }

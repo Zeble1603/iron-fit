@@ -7,9 +7,9 @@ const userSchema = new Schema(
     },
     password: String,
     amigos: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    rutinas: [{ type: Schema.Types.ObjectId, ref: "Rutinas" }], //tomo todas las rutinas
+    rutinas: [{ type: Schema.Types.ObjectId, ref: "Rutina" }], //tomo todas las rutinas
     rutinasRealizadas: [
-      { type: Schema.Types.ObjectId, ref: "Rutinas" },
+      { type: Schema.Types.ObjectId, ref: "Rutina" },
     ], //tomo solo las rutinas con booleano true
   },
   {

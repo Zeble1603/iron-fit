@@ -1,0 +1,31 @@
+<h2>Liste des exercices </h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Body Part</th>
+      <th>Target Muscle</th>
+      <th>Equipment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><input type="text" placeholder="Barbell bench press" /></td>
+      <td>
+        <select name="bodyPart" id="bodyPart">
+        </select>
+      </td>
+      <td><select name="bodyPart" id="bodyPart"></select></td>
+      <td><select name="bodyPart" id="bodyPart"></select></td>
+    </tr>
+    {{#each exercisesList}}
+      <tr>
+        <td><a href="/exercises/exercise-detail/{{id}}">{{name}}</a></td>
+        <td>{{bodyPart}}</td>
+        <td>{{target}}</td>
+        <td>{{equipment}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
