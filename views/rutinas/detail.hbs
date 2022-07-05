@@ -12,6 +12,9 @@
       <div class="button-container">
         <a class="anchor-button" href="">Exercise detail</a>
         <button class="anchor-button">Done</button>
+        <form action="/delete/{{_id}}/{{../rutina._id}}" method="post">
+          <button type="submit" class="anchor-button">Delete</button>
+        </form>
       </div>
     </div>
   {{/each}}

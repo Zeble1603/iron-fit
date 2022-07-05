@@ -74,4 +74,15 @@ router.post("/add/:idExercise/:idRutina",(req,res,next)=>{
     */
 })  
 
+router.post("/delete/:idWorkout/:idRutina", (req,res,next)=>{
+    const {idWorkout,idRutina} = req.params
+    Workout.findByIdAndDelete(idWorkout)
+    .then((promise)=>{
+        res.redirect(`/rutina/${idRutina}`)
+    })
+    .catch((err)=>{
+        next(err)
+    })
+})
+
 module.exports = router;
