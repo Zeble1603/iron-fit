@@ -4,12 +4,22 @@ const ApiService = require("../services/api.service");
 const myApiService = new ApiService()
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+function test(){
+    console.log('HELLO WORLD')
+}
+
 router.get("/exercises", (req,res,next)=>{
-    myApiService.getAllExercices()
-    .then((exercisesList)=>{
-        console.log(exercisesList)
-        res.render('exercises/exercises', 
-        {exercisesList:exercisesList.data})
+    myApiService.getAllBodyParts()
+    .then((allBodyParts)=>{
+        myApiService.getTargetMuscles()
+        .then((allTargetMuscles)=>{
+            myApiService.getAllExercises()
+            .then((exercisesList,)=>{
+                res.render('exercises/exercises', 
+                {exercisesList:exercisesList.data, allBodyParts:allBodyParts.data,
+                    allTargetMuscles:allTargetMuscles.data})
+            })
+        })
     })
     /*.then((allBodyParts)=>{ 
         myApiService.getTargetMuscles()
@@ -26,9 +36,10 @@ router.get("/exercises", (req,res,next)=>{
 router.get("/exercises/exercise-detail/:id", (req, res, next) => {
     const {id} = req.params
     console.log(id)
-    myApiService.getExerciceById(id)
-    .then((exercice)=>{
-        res.render("exercises/exercise-detail", { exercice });
+    myApiService.getExerciseById(id)
+    .then((exercise)=>{
+        console.log(exercise.data)
+        res.render("exercises/exercise-detail", { exercise:exercise.data });
     })
     .catch((err)=>{
         next(err)

@@ -1,4 +1,11 @@
 <h2>Liste des exercices </h2>
+<label for="Body Part">Filter by body part:</label>
+
+<select name="Body Part" id="bodypart">
+  {{#each allBodyParts }}
+    <option value={{this}}>{{this}}</option>
+  {{/each}}
+</select>
 
 <table class="table">
   <thead>
@@ -10,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each exercicesList }}
+    {{#each exercisesList }}
         <tr>
             <td><a href="/exercises/exercise-detail/{{id}}">{{ name }}</a></td>
             <td>{{ bodyPart }}</td>
