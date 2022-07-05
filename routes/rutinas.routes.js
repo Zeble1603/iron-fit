@@ -4,6 +4,7 @@ const User = require("../models/User.model");
 const ApiService = require("../services/api.service");
 const myApiService = new ApiService();
 const Rutina = require("../models/Rutina.model"); 
+const { response } = require("../app");
 
 router.post('/new-rutina', (req,res,next)=>{
     debugger
@@ -21,8 +22,15 @@ router.post('/new-rutina', (req,res,next)=>{
     })
 })
 
-router.get("/rutina/:rutinaId", (req, res) => {
-    res.render("rutinas/detail");
+router.get("/rutina/:rutinaId", (req, res, next) => {
+    const {rutinaId} = req.params
+    Rutina.findById(rutinaId)
+    .then((rutina)=>{
+        res.render("rutinas/detail", {rutina,workout:rutina.workout});
+    })
+    .catch((err)=>{
+        next(err)
+    })
   });
   
 
