@@ -1,5 +1,6 @@
 <h2>Liste des exercices </h2>
-<table class="table">
+
+<table id="exercisesTable" class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -7,26 +8,53 @@
       <th>Target Muscle</th>
       <th>Equipment</th>
     </tr>
-  </thead>
-  <tbody>
     <tr>
-      <td><input type="text" placeholder="Barbell bench press" /></td>
-      <td>
-        <select name="bodyPart" id="bodyPart">
+      <th><input
+          type="text"
+          id="exerciseSearch"
+          onkeyup="searchExerciseByName()"
+          placeholder="Barbell bench press"
+        /></th>
+      <th>
+        <select name="selectbodyPart" id="selectBodyPart">
           {{#each allBodyParts}}
-            <option value={{this}}>{{this}}</option>
+            <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select>
-      </td>
-      <td><select name="bodyPart" id="bodyPart"></select></td>
-      <td><select name="bodyPart" id="bodyPart"></select></td>
+      </th>
+      <th>
+        <select name="selectTargetMuscle" id="selectTargetMuscle">
+          {{#each allTargetMuscles}}
+            <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+      </th>
+      <th>
+        <select name="selectEquipment" id="selectEquipment">
+          {{#each allEquipments}}
+            <option value="{{this}}">{{this}}</option>
+          {{/each}}
+        </select>
+      </th>
     </tr>
+
+  </thead>
+  <tbody>
     {{#each exercisesList}}
       <tr>
         <td><a href="/exercises/exercise-detail/{{id}}">{{name}}</a></td>
-        <td>{{bodyPart}}</td>
-        <td>{{target}}</td>
-        <td>{{equipment}}</td>
+        <td id="bodyPart">{{bodyPart}}</td>
+        <td id="targetMuscle">{{target}}</td>
+        <td id="equipment">{{equipment}}</td>
+        {{#if rutinaId}}
+          <td id="button-addWorkout">
+            <form action="/add/{{rutinaId}}" method="POST">
+              <button class="button is-primary is-outlined is-responsive">
+                Add to rutina
+              </button>
+            </form>
+          </td>
+        {{/if}}
       </tr>
     {{/each}}
   </tbody>

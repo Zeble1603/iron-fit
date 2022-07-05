@@ -1,20 +1,42 @@
-<div class="container-detail">
-  <p class="card-title">{{rutina.name}}</p>
-  <button class="start-button anchor-button">Start</button>
-  {{#each workout }}
-    <div class="workout-row">
-      <div class="title-container">
-        <p class="exercise-name">{{name}}</p>
-      </div>
-      <div class="input-container">
-        <input class="input-workout" type="number" /><span>Rep.</span>
-        <input class="input-workout" type="number" /><span>Kg.</span></div>
-      <div class="button-container">
-        <a class="anchor-button" href="">Exercise detail</a>
-        <button class="anchor-button">Done</button>
-      </div>
+<h2>Bienvenido {{loggedUser.username}} !</h2>
+
+<h3>Mis plantillas:</h3>
+{{!-- {{#each loggedUser.rutinas}} --}}
+<div class="cards-container">
+  {{#each rutinas}}
+    <div class="rutina-container">
+      <p class="card-title">{{name}}</p>
+      <a href="/rutina/{{_id}}" class="anchor-button">Detalles</a>
     </div>
   {{/each}}
-  <a href="" class="anchor-button add-workout">Add an exercise</a>
+  <div class="rutina-container">
+    <form action="/new-rutina" method="POST">
+      <input
+        id="rutinaNameInput"
+        type="text"
+        name="rutinaName"
+        placeholder="Name your new Rutina"
+      />
+      <button type="submit" class="anchor-button">Add Rutina</button>
+    </form>
+  </div>
+</div>
+
+<h3>Historial:</h3>
+{{!-- {{#each loggedUser.rutinasRealizadas}} --}}
+<div class="cards-container">
+  <div class="rutina-container">
+    <p class="card-title">Rutina Name</p>
+    <a href="" class="anchor-button">Detalles</a>
+  </div>
+  <div class="rutina-container">
+    <p class="card-title">Rutina Name</p>
+    <a href="" class="anchor-button">Detalles</a>
+  </div>
+  <div class="rutina-container">
+    <p class="card-title">Rutina Name</p>
+    <a href="" class="anchor-button">Detalles</a>
+  </div>
 
 </div>
+{{!-- {{/each}} --}}
