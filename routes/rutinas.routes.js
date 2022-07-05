@@ -6,15 +6,21 @@ const myApiService = new ApiService();
 const Rutina = require("../models/Rutina.model"); 
 
 router.post('/new-rutina', (req,res,next)=>{
-    debugger
     const {rutinaName} = req.body
     const loggedUser = req.session.user
-    Rutina.create({
-        name:rutinaName,
-    })
-    .then((newRutina)=>{
-        loggedUser.rutinas.push(newRutina)
-        res.redirect(`/profile`)
+    User.findOne({username:loggedUser.username})
+    .then((dbUser)=>{
+        Rutina.create({
+            name:rutinaName,
+        })
+        .then((newRutina)=>{
+            console.log('USER:',dbUser)
+            console.log('RUTINA:',newRutina)
+            dbUser.rutinas.push(newRutina)
+            console.log('User.rutinas', dbUser.rutinas)
+            dbUser.save()
+            res.redirect(`/profile`)
+        })
     })
     .catch((err)=>{
         next(err)
