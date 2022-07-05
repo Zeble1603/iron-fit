@@ -31,9 +31,9 @@ class ApiService {
         return this.api.get(`/name/${name}`);
     }
 
-    /*getTargetMuscles = () => {
+    getTargetMuscles = () => {
         return this.api.get(`/targetList`);
-    }*/
+    }
 
     getExercicebyTarget = (target) => {
         return this.api.get(`/target/${target}`);
@@ -44,7 +44,7 @@ class ApiService {
     }
 
     getEquipment = () => {
-        return this.api.get(`/equipmentList`);
+            return this.api.get(`/equipmentList`);
     }
 }
 

@@ -23,8 +23,8 @@ app.use(express.static("public"));
 
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
-const exercicesRoutes = require("./routes/exercices.routes");
-app.use("/", exercicesRoutes);
+const exercisesRoutes = require("./routes/exercises.routes");
+app.use("/", exercisesRoutes);
 
 app.locals.title = `${capitalized(projectName)}- Generated with Ironlauncher`;
 // 👇 Start handling routes here

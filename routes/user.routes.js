@@ -13,9 +13,5 @@ router.get("/rutina-detail", isLoggedIn, (req, res) => {
   const loggedUser = req.user;
   res.render("user/detalles", { loggedUser });
 });
-router.get("/exercise-detail", isLoggedIn, (req, res) => {
-  const loggedUser = req.user;
-  res.render("exercices/exercise-detail", { loggedUser });
-});
 
 module.exports = router;
