@@ -7,6 +7,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/profile", isLoggedIn, (req, res) => {
   const loggedUser = req.user;
+  console.log(loggedUser);
   res.render("user/profile", { loggedUser, rutinas: loggedUser.rutinas });
 });
 
