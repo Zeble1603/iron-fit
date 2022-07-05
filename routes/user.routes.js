@@ -7,7 +7,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/profile", isLoggedIn, (req, res) => {
   console.log(req.session.user);
-  res.render("user/profile", { userInSession: req.session.user });
+  res.render("user/profile", { loggedUser: req.session.user });
 });
 
 module.exports = router;

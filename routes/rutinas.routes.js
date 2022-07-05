@@ -7,8 +7,11 @@ const myApiService = new ApiService();
 const Rutina = require("../models/Rutina.model");
 =======
 const Rutina = require("../models/Rutina.model"); 
+<<<<<<< HEAD
 const { response } = require("../app");
 >>>>>>> ab3c6524bcbfddc7a92bf41108cdf4b4040a5bbc
+=======
+>>>>>>> fd1b7f527bc9b241e58edeba6823a1c906e5d926
 
 router.post("/new-rutina", (req, res, next) => {
   debugger;
