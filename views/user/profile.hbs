@@ -1,23 +1,27 @@
-<h2>Bienvenido {{loggedUser.username}} !</h2>
+<h2>Bienvenido {{userInSession.username}} !</h2>
 
 <h3>Mis plantillas:</h3>
 {{!-- {{#each loggedUser.rutinas}} --}}
 <div class="cards-container">
+  {{#each rutinas}}
+    <div class="rutina-container">
+      <p class="card-title">{{name}}</p>
+      <a href="/rutina/{{_id}}" class="anchor-button">Detalles</a>
+    </div>
+  {{/each}}
   <div class="rutina-container">
-    <p class="card-title">Rutina Name</p>
-    <a href="" class="anchor-button">Detalles</a>
+    <form action="/new-rutina" method="POST">
+      <input
+        id="rutinaNameInput"
+        type="text"
+        name="rutinaName"
+        placeholder="Name your new Rutina"
+      />
+      <button type="submit" class="anchor-button">Add Rutina</button>
+    </form>
   </div>
-  <div class="rutina-container">
-    <p class="card-title">Rutina Name</p>
-    <a href="" class="anchor-button">Detalles</a>
-  </div><div class="rutina-container">
-    <p class="card-title">Rutina Name</p>
-    <a href="" class="anchor-button">Detalles</a>
-  </div>
-
 </div>
 
-{{!-- {{/each}} --}}
 <h3>Historial:</h3>
 {{!-- {{#each loggedUser.rutinasRealizadas}} --}}
 <div class="cards-container">

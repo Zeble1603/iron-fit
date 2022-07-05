@@ -5,30 +5,47 @@ const myApiService = new ApiService();
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/exercises", (req, res, next) => {
-  myApiService
-    .getAllBodyParts()
-    .then((allBodyParts) => {
+  myApiService.getAllBodyParts().then((allBodyParts) => {
       myApiService.getTargetMuscles().then((allTargetMuscles) => {
-        myApiService.getAllExercises().then((exercisesList) => {
-          res.render("exercises/exercises", {
-            exercisesList: exercisesList.data,
-            allBodyParts: allBodyParts.data,
-            allTargetMuscles: allTargetMuscles.data,
-          });
-        });
+        myApiService.getEquipment().then((allEquipments)=>{
+            myApiService.getAllExercises().then((exercisesList) => {
+                console.log(allBodyParts.data)
+                res.render("exercises/exercises", {
+                  exercisesList: exercisesList.data,
+                  allBodyParts: allBodyParts.data,
+                  allTargetMuscles: allTargetMuscles.data,
+                  allEquipments : allEquipments.data,
+                });
+              })
+        })
       });
     })
-    /*.then((allBodyParts)=>{ 
-        myApiService.getTargetMuscles()
-    })
-    .then((targetMuscles)=>{
-        res.render('/exercices/exercices', 
-        {exercicesList,allBodyParts,targetMuscles})
-    })*/
     .catch((err) => {
       next(err);
     });
 });
+
+router.get("/exercises/:rutinaId", (req, res, next) => {
+    const {rutinaId} = req.params
+    myApiService.getAllBodyParts().then((allBodyParts) => {
+        myApiService.getTargetMuscles().then((allTargetMuscles) => {
+          myApiService.getEquipment().then((allEquipments)=>{
+              myApiService.getAllExercises().then((exercisesList) => {
+                  res.render("exercises/exercises", {
+                    exercisesList: exercisesList.data,
+                    allBodyParts: allBodyParts.data,
+                    allTargetMuscles: allTargetMuscles.data,
+                    allEquipments : allEquipments.data,
+                    rutinaId
+                  });
+                })
+          })
+        });
+      })
+      .catch((err) => {
+        next(err);
+      });
+  });
 
 router.get("/exercises/exercise-detail/:id", (req, res, next) => {
   const { id } = req.params;
