@@ -29,7 +29,6 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
   Rutina.findById(rutinaId)
     .populate("workout")
     .then((rutina) => {
-      console.log(rutina);
       res.render("rutinas/detail", { rutina, workout: rutina.workout });
     })
     .catch((err) => {
@@ -81,7 +80,6 @@ router.post("/delete/:idWorkout/:idRutina", (req, res, next) => {
     });
 });
 
-module.exports = router;
 router.post("/rutina/:rutinaId/delete", (req, res, next) => {
   const loggedUser = req.session.user;
   const { rutinaId } = req.params;
@@ -94,6 +92,29 @@ router.post("/rutina/:rutinaId/delete", (req, res, next) => {
       })
       .catch((error) => next(error));
   });
+});
+router.get("/rutina/:rutinaId/edit", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  Rutina.findById(rutinaId)
+    .then((rutina) => {
+      res.render("rutinas/editName", { loggedUser, rutina });
+    })
+    .catch((error) => next(error));
+});
+
+router.post("/rutina/:rutinaId/edit", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  const { newName } = req.body;
+  console.log("nuevo nombre", newName);
+
+  Rutina.findByIdAndUpdate(rutinaId, { name: newName }, { new: true })
+    .then((routine) => {
+      routine.save();
+      res.redirect("/profile");
+    })
+    .catch((error) => next(error));
 });
 
 module.exports = router;
