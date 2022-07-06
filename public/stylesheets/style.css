@@ -12,6 +12,7 @@ html {
   background-color: #4a0f6f;
 }
 body {
+  position: relative;
   /* background: linear-gradient(147deg, #8c1cd1 0%, #ce93d8 74%); */
   background-color: #4a0f6f;
   width: 100%;
@@ -55,10 +56,10 @@ ul li a,
 .cards-container a,
 .anchor-button {
   padding: 5px 15px;
-  outline: none;
-  background-color: #8c1cd1;
-  color: white;
-  border: 2px solid white;
+  outline: none !important;
+  background-color: #8c1cd1 !important;
+  color: white !important;
+  border: 2px solid white !important;
   text-decoration: none;
 }
 ul li a:visited {
@@ -293,6 +294,9 @@ h2 {
   margin-right: 5px;
 }
 footer {
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 200px);
   padding-top: 20px;
   padding-bottom: 15px;
   display: flex;
@@ -318,9 +322,38 @@ footer img {
   height: 80px;
   width: 80px;
 }
+.exercise-table {
+  width: 80%;
+  margin: 0 auto;
+  border: 2px solid black;
+  background-color: rgb(123, 123, 123);
+  color: white;
+  padding-bottom: 80px;
+}
+.exercise-table a {
+  color: white;
+  text-decoration: underline;
+}
+.exercise-table input,
+.exercise-table select {
+  width: 100%;
+  text-align: center;
+}
+.mb {
+  margin-bottom: 35px;
+}
+table,
+th,
+td,
+tr {
+  border: 2px solid white !important;
+  border-width: 2px !important;
+  padding: 5px;
+  text-align: center !important;
+}
 .form-container label {
   margin-right: 15px;
-  color: #ffff00;
+  color: white;
   font-size: 1.8rem;
 }
 .form-container input {
@@ -331,9 +364,9 @@ footer img {
 }
 .form-container button:hover,
 .form-container input:focus {
-  border: 2px solid #fff000;
-  background-color: black;
-  color: #fff000;
+  border: 2px solid #8c1cd1;
+  background-color: white;
+  color: #8c1cd1;
 }
 .form-container button {
   padding: 10px 20px;
@@ -344,20 +377,20 @@ footer img {
 .form-container p,
 .account-message {
   font-size: 1.8rem;
-  color: #fff000;
+  color: white;
 }
 .form-container p a {
   margin-left: 10px;
-  border: 1px solid #fff000;
+  border: 1px solid white;
   padding: 5px 10px;
 }
 .form-container p a:visited {
-  color: #fff000;
+  color: white;
 }
 .form-container p a:hover {
-  border: 1px solid black;
-  background-color: #fff000;
-  color: black;
+  border: 1px solid #8c1cd1;
+  background-color: white;
+  color: #8c1cd1;
 }
 .landing-image {
   margin-top: 5vh;
@@ -403,20 +436,20 @@ footer img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #fff000;
+  border: 2px solid white;
   padding: 20px 50px;
 }
 h3 {
   margin: 50px 100px;
   font-size: 2rem;
-  color: #fff000;
+  color: white;
 }
 
 .container-detail {
   width: 80%;
   margin: 100px auto;
   height: 500px;
-  border: 2px solid #fff000;
+  border: 2px solid white;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -428,7 +461,7 @@ h3 {
 .rutina-container .card-title {
   margin: 30px auto;
   font-size: 2rem;
-  color: #fff000;
+  color: white;
   letter-spacing: 2px;
 }
 .workout-row {
@@ -452,7 +485,7 @@ h3 {
 }
 .workout-row .exercise-name {
   font-size: 1.6rem;
-  color: #fff000;
+  color: white;
   line-height: 4rem;
 }
 .workout-row .input-workout {
@@ -463,7 +496,7 @@ h3 {
 }
 .workout-row span {
   font-size: 1.6rem;
-  color: #fff000;
+  color: white;
   line-height: 4rem;
 }
 .anchor-button {
@@ -482,12 +515,12 @@ h3 {
   height: auto;
   margin: 0 auto;
   padding: 50px 0px;
-  border: 2px solid #fff000;
+  border: 2px solid white;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  color: #fff000;
+  color: white;
   margin-top: 100px;
   gap: 50px;
   margin-bottom: 100px;
