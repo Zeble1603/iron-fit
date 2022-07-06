@@ -7,7 +7,6 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/profile", isLoggedIn, (req, res) => {
   const loggedUser = req.session.user;
-  console.log(loggedUser);
   User.findOne({ username: loggedUser.username })
     .populate("rutinas")
     .then((dbUser) => {

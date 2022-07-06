@@ -96,4 +96,42 @@ router.post("/edit/:idWorkout/:idRutina",(req,res,next)=>{
     })
 })
 
+router.post("/rutina/:rutinaId/delete", (req, res, next) => {
+  const loggedUser = req.session.user;
+  const { rutinaId } = req.params;
+  User.findOne({ username: loggedUser.username }).then((dbUser) => {
+    Rutina.findByIdAndDelete(rutinaId)
+      .then((response) => {
+        dbUser.rutinas.pop(response);
+        dbUser.save();
+        res.redirect("/profile");
+      })
+      .catch((error) => next(error));
+  });
+});
+
+router.get("/rutina/:rutinaId/edit", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  Rutina.findById(rutinaId)
+    .then((rutina) => {
+      res.render("rutinas/editName", { loggedUser, rutina });
+    })
+    .catch((error) => next(error));
+});
+
+router.post("/rutina/:rutinaId/edit", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  const { newName } = req.body;
+  console.log("nuevo nombre", newName);
+
+  Rutina.findByIdAndUpdate(rutinaId, { name: newName }, { new: true })
+    .then((routine) => {
+      routine.save();
+      res.redirect("/profile");
+    })
+    .catch((error) => next(error));
+});
+
 module.exports = router;
