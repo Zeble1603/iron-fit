@@ -1,6 +1,6 @@
 <h2>Liste des exercices </h2>
 
-  <table id="exercisesTable"class="table">
+<table id="exercisesTable" class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -9,30 +9,35 @@
       <th>Equipment</th>
     </tr>
     <tr>
-      <th><input type="text" id="exerciseSearch" onkeyup="searchExerciseByName()" placeholder="Barbell bench press"/></th>
+      <th><input
+          type="text"
+          id="exerciseSearch"
+          onkeyup="searchExerciseByName()"
+          placeholder="Barbell bench press"
+        /></th>
       <th>
         <select name="selectbodyPart" id="selectBodyPart">
           {{#each allBodyParts}}
-            <option value='{{this}}'>{{this}}</option>
+            <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select>
       </th>
       <th>
         <select name="selectTargetMuscle" id="selectTargetMuscle">
           {{#each allTargetMuscles}}
-            <option value='{{this}}'>{{this}}</option>
+            <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select>
       </th>
       <th>
         <select name="selectEquipment" id="selectEquipment">
           {{#each allEquipments}}
-            <option value='{{this}}'>{{this}}</option>
+            <option value="{{this}}">{{this}}</option>
           {{/each}}
         </select>
       </th>
     </tr>
-    
+
   </thead>
   <tbody>
     {{#each exercisesList}}
