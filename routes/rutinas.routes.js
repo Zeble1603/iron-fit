@@ -26,10 +26,11 @@ router.post("/new-rutina", (req, res, next) => {
 
 router.get("/rutina/:rutinaId", (req, res, next) => {
   const { rutinaId } = req.params;
+  const loggedUser = req.session.user
   Rutina.findById(rutinaId)
     .populate("workout")
     .then((rutina)=>{
-        res.render("rutinas/detail", {rutina,workout:rutina.workout});
+        res.render("rutinas/detail", {rutina,workout:rutina.workout,loggedUser});
     })
     .catch((err)=>{
         next(err)

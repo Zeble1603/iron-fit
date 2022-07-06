@@ -29,6 +29,7 @@ router.get("/exercises", (req, res, next) => {
 });
 
 router.get("/exercises/:rutinaId", (req, res, next) => {
+  const loggedUser = req.session.user
   const { rutinaId } = req.params;
   myApiService.getAllBodyParts().then((allBodyParts) => {
     myApiService.getTargetMuscles().then((allTargetMuscles) => {
@@ -40,6 +41,7 @@ router.get("/exercises/:rutinaId", (req, res, next) => {
             allTargetMuscles: allTargetMuscles.data,
             allEquipments: allEquipments.data,
             rutinaId: rutinaId,
+            loggedUser
           });
         });
       });
@@ -49,13 +51,15 @@ router.get("/exercises/:rutinaId", (req, res, next) => {
 
 router.get("/exercises/exercise-detail/:id", (req, res, next) => {
   const { id } = req.params;
+  const loggedUser = req.session.user
   myApiService
     .getExerciseById(id)
     .then((exercise) => {
-      res.render("exercises/exercise-detail", { exercise: exercise.data });
+      res.render("exercises/exercise-detail", { exercise: exercise.data, loggedUser });
     })
     .catch((err) => {
       next(err);
     });
 });
+
 module.exports = router;
