@@ -1,5 +1,7 @@
 <div class="container-detail">
   <p class="card-title">{{rutina.name}}</p>
+
+  <button hidden id="timerButton" value="stop"></button>
   {{#each workout }}
     <div class="workout-row">
       <div class="title-container">
@@ -33,6 +35,7 @@
     <form action="/stop/{{rutina._id}}" method="POST">
       <button id="stopButton" class="start-button anchor-button">Stop</button>
     </form>
+    <p id="chrono">00:00</p>
     {{ else }}
     <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an exercise</a>
     <form action="/start/{{rutina._id}}" method="POST">
@@ -41,3 +44,5 @@
   {{/if}}
   
 </div>
+
+<script src="/js/rutina.script.js"></script>

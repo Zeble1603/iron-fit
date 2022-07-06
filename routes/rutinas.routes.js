@@ -5,6 +5,7 @@ const myApiService = new ApiService();
 const Rutina = require("../models/Rutina.model");
 const Workout = require("../models/Workout.model");
 
+
 //GET ROUTES
 router.get("/rutina/:rutinaId", (req, res, next) => {
   const { rutinaId } = req.params;
@@ -12,6 +13,7 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
   Rutina.findById(rutinaId)
     .populate("workout")
     .then((rutina)=>{
+
         res.render("rutinas/detail", {rutina,workout:rutina.workout,loggedUser});
     })
     .catch((err)=>{
