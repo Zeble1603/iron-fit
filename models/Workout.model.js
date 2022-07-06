@@ -8,6 +8,7 @@ const workoutSchema = new Schema(
         weight:Number,
         time:Number,
         needtime:Boolean,
+        done:Boolean,
     },
     {
       timestamps: true,

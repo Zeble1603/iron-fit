@@ -71,7 +71,6 @@ selectEquipmentElement.addEventListener('change', (event)=>{
     let td = tr[i].getElementsByTagName('td')[3];
     if (td){
       let txtValue = td.textContent || td.innerText;
-      //let target = event.target.value.replace(" ", "%20");
       if(txtValue === event.target.value){
         tr[i].style.display = '';
       }else{

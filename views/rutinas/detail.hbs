@@ -1,6 +1,5 @@
 <div class="container-detail">
   <p class="card-title">{{rutina.name}}</p>
-  <button class="start-button anchor-button">Start</button>
   {{#each workout }}
     <div class="workout-row">
       <div class="title-container">
@@ -19,13 +18,26 @@
       </div>
       <div class="button-container">
         <a class="anchor-button" href="">Exercise detail</a>
-        <button class="anchor-button">Done</button>
+        {{#if ../rutina.started}}
+        <form action="/done/{{_id}}/{{../rutina._id}}" method="POST">
+          <button type="submit" class="anchor-button">Done</button>
+        </form>  
+        {{/if}}
         <form action="/delete/{{_id}}/{{../rutina._id}}" method="POST">
           <button type="submit" class="anchor-button">Delete</button>
         </form>
       </div>
     </div>
   {{/each}}
-  <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an exercise</a>
-
+  {{#if rutina.started}}
+    <form action="/stop/{{rutina._id}}" method="POST">
+      <button id="stopButton" class="start-button anchor-button">Stop</button>
+    </form>
+    {{ else }}
+    <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an exercise</a>
+    <form action="/start/{{rutina._id}}" method="POST">
+      <button id="startButton" class="start-button anchor-button">Start</button>
+    </form>
+  {{/if}}
+  
 </div>
