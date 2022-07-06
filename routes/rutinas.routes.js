@@ -8,6 +8,7 @@ const Rutina = require("../models/Rutina.model");
 router.post("/new-rutina", (req, res, next) => {
   const { rutinaName } = req.body;
   const loggedUser = req.session.user;
+
   User.findOne({ username: loggedUser.username })
     .then((dbUser) => {
       Rutina.create({
@@ -32,6 +33,20 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
     .catch((err) => {
       next(err);
     });
+});
+router.post("/rutina/:rutinaId/delete", (req, res, next) => {
+  const loggedUser = req.session.user;
+  const { rutinaId } = req.params;
+  User.findOne({ username: loggedUser.username }).then((dbUser) => {
+    console.log("mirespuesta", dbUser);
+    Rutina.findByIdAndDelete(rutinaId)
+      .then((response) => {
+        dbUser.rutinas.pop(response);
+        dbUser.save();
+        res.redirect("/profile");
+      })
+      .catch((error) => next(error));
+  });
 });
 
 module.exports = router;
