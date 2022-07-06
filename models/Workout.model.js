@@ -7,7 +7,7 @@ const workoutSchema = new Schema(
         repetition:Number,
         weight:Number,
         time:Number,
-        type:String
+        needtime:Boolean,
     },
     {
       timestamps: true,

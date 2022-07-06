@@ -7,12 +7,20 @@
         <p class="exercise-name">{{name}}</p>
       </div>
       <div class="input-container">
-        <input class="input-workout" type="number" /><span>Rep.</span>
-        <input class="input-workout" type="number" /><span>Kg.</span></div>
+      <form action="/edit/{{_id}}/{{../rutina._id}}" method="POST">
+      {{#if workout.needtime}}
+      <input name="time" class="input-workout" type="number" value="{{time}}"/><span>Time</span>
+      {{else}}
+      <input name="repetition" class="input-workout" type="number" value="{{repetition}}"/><span>Rep.</span>
+      <input name="weight" class="input-workout" type="number" value="{{weight}}"/><span>Kg.</span>
+      {{/if}}
+      <button type="submit" class="anchor-button">Save</button>
+      </form>
+      </div>
       <div class="button-container">
         <a class="anchor-button" href="">Exercise detail</a>
         <button class="anchor-button">Done</button>
-        <form action="/delete/{{_id}}/{{../rutina._id}}" method="post">
+        <form action="/delete/{{_id}}/{{../rutina._id}}" method="POST">
           <button type="submit" class="anchor-button">Delete</button>
         </form>
       </div>

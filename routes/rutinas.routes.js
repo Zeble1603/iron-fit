@@ -30,7 +30,6 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
     Rutina.findById(rutinaId)
     .populate("workout")
     .then((rutina)=>{
-        console.log(rutina)
         res.render("rutinas/detail", {rutina,workout:rutina.workout});
     })
     .catch((err)=>{
@@ -44,7 +43,6 @@ router.post("/add/:idExercise/:idRutina",(req,res,next)=>{
     .then((rutina)=>{
         myApiService.getExerciseById(idExercise)
         .then((exercise)=>{
-            console.log(exercise)
             let type = exercise.data.bodyPart
             let name = exercise.data.name
             Workout.create({
@@ -52,6 +50,11 @@ router.post("/add/:idExercise/:idRutina",(req,res,next)=>{
                 type:type,
             })
             .then((workout)=>{
+                if(workout.type === "cardio"){
+                    workout.needtime = true
+                }else{
+                    workout.needtime = false
+                }
                 rutina.workout.push(workout)
                 rutina.save()
                 res.redirect(`/rutina/${rutina._id}`)
@@ -61,17 +64,6 @@ router.post("/add/:idExercise/:idRutina",(req,res,next)=>{
     .catch((err)=>{
         next(err)
     })
-    /*promesse -> exercice
-
-    on récupère le nom et le target de l'exercice
-    on créer un workout à partir du schema
-    si le target est cardio, on set le cardio à true
-    promesse -> workout
-    on cherche la rutina par son id
-    promesse -> rutina 
-    on push la workout dans la liste des workout de rutina
-    
-    */
 })  
 
 router.post("/delete/:idWorkout/:idRutina", (req,res,next)=>{
@@ -82,6 +74,22 @@ router.post("/delete/:idWorkout/:idRutina", (req,res,next)=>{
     })
     .catch((err)=>{
         next(err)
+    })
+})
+
+router.post("/edit/:idWorkout/:idRutina",(req,res,next)=>{
+    const {time,repetition,weight} = req.body
+    console.log("repetition:",repetition)
+    const {idWorkout,idRutina} = req.params
+    Workout.findByIdAndUpdate(idWorkout,{
+        time,
+        repetition,
+        weight
+    },{new:true})
+    .then((workout)=>{
+        console.log(workout)
+        workout.save()
+        res.redirect(`/rutina/${idRutina}`)
     })
 })
 

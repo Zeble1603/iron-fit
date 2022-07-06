@@ -9,7 +9,6 @@ router.get("/exercises", (req, res, next) => {
       myApiService.getTargetMuscles().then((allTargetMuscles) => {
         myApiService.getEquipment().then((allEquipments)=>{
             myApiService.getAllExercises().then((exercisesList) => {
-                console.log(allBodyParts.data)
                 res.render("exercises/exercises", {
                   exercisesList: exercisesList.data,
                   allBodyParts: allBodyParts.data,
@@ -49,7 +48,6 @@ router.get("/exercises/:rutinaId", (req, res, next) => {
 
 router.get("/exercises/exercise-detail/:id", (req, res, next) => {
   const { id } = req.params;
-  console.log(id);
   myApiService
     .getExerciseById(id)
     .then((exercise) => {

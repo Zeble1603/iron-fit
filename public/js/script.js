@@ -8,8 +8,6 @@ document.addEventListener(
 
 function searchExerciseByName() {
 	// Declare variables
-  debugger
-  console.log('HOLA searchExerciseByName')
 	var input, filter, table, tr, td, i, txtValue;
 	input = document.getElementById('exerciseSearch');
 	filter = input.value.toUpperCase();
