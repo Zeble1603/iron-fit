@@ -4,6 +4,9 @@ const workoutSchema = new Schema(
     {
         name:String,
         type:String,
+        target:String,
+        equipment:String,
+        gifUrl:String,
         repetition:Number,
         weight:Number,
         time:Number,
