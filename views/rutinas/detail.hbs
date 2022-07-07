@@ -1,9 +1,11 @@
 <div class="container-detail">
+  <div>
   <p class="card-title">{{rutina.name}}</p>
   <p class="card-title">{{date}}</p>
   {{#if rutina.done}}
   <p class="card-title">{{rutina.timer}}</p>
   {{/if}}
+  </div>
   <button hidden id="timerButton" value="stop"></button>
   {{#each workout }}
     <div class="workout-row">
