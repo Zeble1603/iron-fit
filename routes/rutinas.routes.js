@@ -5,19 +5,21 @@ const myApiService = new ApiService();
 const Rutina = require("../models/Rutina.model");
 const Workout = require("../models/Workout.model");
 
-
 //GET ROUTES
 router.get("/rutina/:rutinaId", (req, res, next) => {
   const { rutinaId } = req.params;
-  const loggedUser = req.session.user
+  const loggedUser = req.session.user;
   Rutina.findById(rutinaId)
     .populate("workout")
-    .then((rutina)=>{
-
-        res.render("rutinas/detail", {rutina,workout:rutina.workout,loggedUser});
+    .then((rutina) => {
+      res.render("rutinas/detail", {
+        rutina,
+        workout: rutina.workout,
+        loggedUser,
+      });
     })
-    .catch((err)=>{
-        next(err)
+    .catch((err) => {
+      next(err);
     })
     .catch((err) => {
       next(err);
@@ -111,49 +113,51 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
     })
 })  
 
-router.post("/delete/:idWorkout/:idRutina", (req,res,next)=>{
-    const {idWorkout,idRutina} = req.params
-    Workout.findByIdAndDelete(idWorkout)
-    .then((promise)=>{
-        res.redirect(`/rutina/${idRutina}`)
+router.post("/delete/:idWorkout/:idRutina", (req, res, next) => {
+  const { idWorkout, idRutina } = req.params;
+  Workout.findByIdAndDelete(idWorkout)
+    .then((promise) => {
+      res.redirect(`/rutina/${idRutina}`);
     })
-    .catch((err)=>{
-        next(err)
-    })
-})
+    .catch((err) => {
+      next(err);
+    });
+});
 
-router.post("/edit/:idWorkout/:idRutina",(req,res,next)=>{
-    const {time,repetition,weight} = req.body
-    const {idWorkout,idRutina} = req.params
-    Workout.findByIdAndUpdate(idWorkout,{
-        time,
-        repetition,
-        weight,
+router.post("/edit/:idWorkout/:idRutina", (req, res, next) => {
+  const { time, repetition, weight } = req.body;
+  const { idWorkout, idRutina } = req.params;
+  Workout.findByIdAndUpdate(
+    idWorkout,
+    {
+      time,
+      repetition,
+      weight,
+    },
+    { new: true }
+  )
+    .then((workout) => {
+      console.log(workout);
+      workout.save();
+      res.redirect(`/rutina/${idRutina}`);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
-    },{new:true})
-    .then((workout)=>{
-        console.log(workout)
-        workout.save()
-        res.redirect(`/rutina/${idRutina}`)
+router.post("/done/:idWorkout/:idRutina", (req, res, next) => {
+  const { done } = req.body;
+  const { idWorkout, idRutina } = req.params;
+  Workout.findByIdAndUpdate(idWorkout, { done: true }, { new: true })
+    .then((workout) => {
+      workout.save();
+      res.redirect(`/rutina/${idRutina}`);
     })
-    .catch((err)=>{
-      next(err)
-    })
-})
-
-router.post("/done/:idWorkout/:idRutina", (req,res,next)=>{ 
-  const {done} = req.body
-  const {idWorkout,idRutina} = req.params
-  Workout.findByIdAndUpdate(idWorkout,
-    {done:true},{new:true})
-    .then((workout)=>{
-      workout.save()
-      res.redirect(`/rutina/${idRutina}`)
-    })
-    .catch((err)=>{
-      next(err)
-    })
-})
+    .catch((err) => {
+      next(err);
+    });
+});
 
 router.post("/rutina/:rutinaId/delete", (req, res, next) => {
   const loggedUser = req.session.user;
@@ -168,7 +172,6 @@ router.post("/rutina/:rutinaId/delete", (req, res, next) => {
       .catch((error) => next(error));
   });
 });
-
 router.get("/rutina/:rutinaId/edit", (req, res, next) => {
   const { rutinaId } = req.params;
   const loggedUser = req.session.user;
@@ -202,30 +205,28 @@ router.post("/rutina/:rutinaId/edit", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-router.post("/stop/:rutinaId", (req,res,next)=>{
-  const {rutinaId} = req.params
-  Rutina.findByIdAndUpdate(rutinaId,
-    {started:false},{new:true})
-  .then((rutina)=>{
-    rutina.save()
-    res.redirect(`/rutina/${rutinaId}`)
-  })  
-  .catch((err)=>{
-    next(err)
-  })
-})
+router.post("/stop/:rutinaId", (req, res, next) => {
+  const { rutinaId } = req.params;
+  Rutina.findByIdAndUpdate(rutinaId, { started: false }, { new: true })
+    .then((rutina) => {
+      rutina.save();
+      res.redirect(`/rutina/${rutinaId}`);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
-router.post("/start/:rutinaId", (req,res,next)=>{
-  const {rutinaId} = req.params
-  Rutina.findByIdAndUpdate(rutinaId,
-    {started:true},{new:true})
-  .then((rutina)=>{
-    rutina.save()
-    res.redirect(`/rutina/${rutinaId}`)
-  })  
-  .catch((err)=>{
-    next(err)
-  })
-})
+router.post("/start/:rutinaId", (req, res, next) => {
+  const { rutinaId } = req.params;
+  Rutina.findByIdAndUpdate(rutinaId, { started: true }, { new: true })
+    .then((rutina) => {
+      rutina.save();
+      res.redirect(`/rutina/${rutinaId}`);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
 
 module.exports = router

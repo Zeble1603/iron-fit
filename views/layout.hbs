@@ -21,7 +21,7 @@
           <a href="/">Home</a>
           <a href="/exercises">Exercises</a>
           {{#if loggedUser}}
-            <a href="/profile">My Profile</a>
+            <a href="/profile" class="gordito">My Profile</a>
             <a href="/logout">Logout</a>
           {{else}}
             <a href="/signup">Signup</a>
@@ -34,6 +34,7 @@
 
     {{{body}}}
     <footer>
+      <div class="pos-abs">
       <div class="copyright">
         <p>Copyright 2022 - All rights reserved</p>
         <div class="linkedin">
@@ -48,6 +49,7 @@
         <a href="https://github.com/Zeble1603/iron-fit">
         <img src="/images/github.png" alt="" />
         </a>
+      </div>
       </div>
     </footer>
     <script src="/js/script.js"></script>
