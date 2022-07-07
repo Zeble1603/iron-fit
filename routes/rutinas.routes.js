@@ -36,6 +36,28 @@ router.get("/rutina/:rutinaId/edit", (req, res, next) => {
     .catch((error) => next(error));
 });
 
+router.get("/rutina/:rutinaId", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  const usernameCapitalized = capitalized(loggedUser.username);
+  Rutina.findById(rutinaId)
+    .populate("workout")
+    .then((rutina) => {
+      res.render("rutinas/detail", {
+        usernameCapitalized,
+        rutina,
+        workout: rutina.workout,
+        loggedUser,
+      });
+    })
+    .catch((err)=>{
+        next(err)
+    })
+})  
+
 //POST ROUTES
 router.post("/new-rutina", (req, res, next) => {
   const { rutinaName } = req.body;
@@ -90,28 +112,6 @@ router.post("/add/:idExercise/:idRutina",(req,res,next)=>{
       next(err)
     })  
   })
-  
-router.get("/rutina/:rutinaId", (req, res, next) => {
-  const { rutinaId } = req.params;
-  const loggedUser = req.session.user;
-  const capitalized = (string) => {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
-  };
-  const usernameCapitalized = capitalized(loggedUser.username);
-  Rutina.findById(rutinaId)
-    .populate("workout")
-    .then((rutina) => {
-      res.render("rutinas/detail", {
-        usernameCapitalized,
-        rutina,
-        workout: rutina.workout,
-        loggedUser,
-      });
-    })
-    .catch((err)=>{
-        next(err)
-    })
-})  
 
 router.post("/delete/:idWorkout/:idRutina", (req, res, next) => {
   const { idWorkout, idRutina } = req.params;
@@ -162,16 +162,15 @@ router.post("/done/:idWorkout/:idRutina", (req, res, next) => {
 router.post("/rutina/:rutinaId/delete", (req, res, next) => {
   const loggedUser = req.session.user;
   const { rutinaId } = req.params;
-  User.findOne({ username: loggedUser.username }).then((dbUser) => {
-    Rutina.findByIdAndDelete(rutinaId)
-      .then((response) => {
-        dbUser.rutinas.pop(response);
-        dbUser.save();
-        res.redirect("/profile");
-      })
-      .catch((error) => next(error));
-  });
+  Rutina.findByIdAndDelete(rutinaId)
+  .then((response)=>{
+    res.redirect("/profile")
+  })
+  .catch((err)=>{
+    next(err)
+  })
 });
+
 router.get("/rutina/:rutinaId/edit", (req, res, next) => {
   const { rutinaId } = req.params;
   const loggedUser = req.session.user;
