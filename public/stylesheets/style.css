@@ -34,6 +34,7 @@ ul li {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 30px;
   color: #ffff00;
   font-size: 2.2rem;
@@ -180,7 +181,7 @@ h2 {
   color: transparent;
   font-weight: 500;
   text-align: center;
-  font-weight: 100;
+  font-weight: 600;
   letter-spacing: 0.6rem;
 }
 .features-section {
@@ -280,6 +281,7 @@ h2 {
   left: calc(50% - 132px);
   text-align: center;
   top: 120px;
+  height: auto !important;
 }
 .form-container {
   display: flex;
@@ -295,6 +297,7 @@ h2 {
 footer {
   position: relative;
   height: 100px;
+  margin-top: 30px;
 }
 footer .copyright {
   display: flex;
@@ -346,7 +349,8 @@ tr {
   color: white;
   font-size: 1.8rem;
 }
-.form-container input {
+.form-container input,
+.container-add form input {
   padding: 5px 10px;
   border-radius: 10px;
   text-align: center;
@@ -426,8 +430,35 @@ tr {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid white;
-  padding: 20px 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  margin: 20px 50px;
+  padding: 0px 30px;
+  gap: 50px;
+  box-shadow: 5px 5px 15px 5px rgba(255, 255, 255, 0.1);
+  width: 30%;
+  min-width: 340px;
+  height: 500px;
+}
+.container-add {
+  margin-top: 50px;
+
+  width: 100%;
+}
+.container-add form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.container-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 25px;
 }
 h3 {
   margin: 50px 100px;
@@ -436,23 +467,29 @@ h3 {
 }
 
 .container-detail {
-  width: 80%;
-  margin: 100px auto;
-  height: 500px;
-  border: 2px solid white;
+  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
-  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  margin: 0 auto;
+  padding: 50px 30px;
+  gap: 50px;
+  box-shadow: 5px 5px 15px 5px rgba(255, 255, 255, 0.1);
+  width: 80%;
+  min-width: 340px;
 }
 .container-detail .card-title,
 .rutina-container .card-title {
+  text-align: center;
   margin: 30px auto;
-  font-size: 2rem;
+  font-size: 4rem;
   color: white;
   letter-spacing: 2px;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 .workout-row {
   display: flex;
@@ -460,19 +497,22 @@ h3 {
   justify-content: space-around;
   width: 90%;
 }
-.input-container,
-.button-container,
 .title-container {
+  width: 20%;
+  text-align: center;
+}
+.input-container,
+.button-container {
   display: flex;
   flex-direction: row;
-  width: 30%;
-  margin: 0 auto;
   justify-content: center;
+  width: 45%;
 }
 .input-container,
 .button-container {
   gap: 10px;
 }
+
 .workout-row .exercise-name {
   font-size: 1.6rem;
   color: white;
@@ -492,13 +532,15 @@ h3 {
 .anchor-button {
   font-size: 1.8rem;
   cursor: pointer;
+  height: 40px;
 }
 .add-workout {
   margin-bottom: 20px;
 }
 .start-button {
   position: absolute;
-  bottom: 50px;
+  bottom: 10;
+  left: calc(50% - 32px);
 }
 .box-detail {
   width: 80%;
@@ -515,10 +557,10 @@ h3 {
   gap: 50px;
   margin-bottom: 100px;
 }
-.box-detail img {
+.container-detail img {
   border-radius: 50px;
 }
-.box-detail .card-title {
+.card-title {
   font-size: 3rem;
   font-weight: 500;
   letter-spacing: 3px;
@@ -528,6 +570,8 @@ h3 {
   flex-direction: row;
   justify-content: space-around;
   gap: 100px;
+  color: white;
+  text-transform: capitalize;
 }
 .key-container,
 .answer-container {
@@ -552,4 +596,17 @@ h3 {
 .gordito {
   width: 200px;
   text-align: center;
+}
+.swiper-wrapper {
+  height: 500px !important;
+}
+.container-detail .hidden-form {
+  position: absolute;
+  bottom: 10;
+  left: calc(50% - 32px);
+}
+.timer {
+  font-size: 5rem;
+  font-family: "Delmon Delicate";
+  color: white;
 }
