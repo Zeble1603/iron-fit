@@ -1,6 +1,7 @@
 <div class="container-detail">
   <p class="card-title">{{rutina.name}}</p>
-  {{#if ../rutina.done}}
+  <p class="card-title">{{date}}</p>
+  {{#if rutina.done}}
   <p class="card-title">{{rutina.timer}}</p>
   {{/if}}
   <button hidden id="timerButton" value="stop"></button>
@@ -45,10 +46,10 @@
       </div>
     </div>
   {{/each}}
-  {{#unless ../rutina.done}}
+  {{#unless rutina.done}}
   {{#if rutina.started}}
     <form action="/stop/{{rutina._id}}" method="POST" class="hidden-form">
-      <input hidden type="number" id="counter" name="counter">
+      <input hidden id="counter" name="counter">
       <button id="stopButton" class=" anchor-button">Stop</button>
     </form>
     <p id="chrono" class="timer">00:00</p>

@@ -31,15 +31,34 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
   const capitalized = (string) => {
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
   };
-  console.log(loggedUser.username);
   const usernameCapitalized = capitalized(loggedUser.username);
   Rutina.findById(rutinaId)
+  .populate("workout")
     .then((rutina) => {
-      res.render("rutinas/editName", {
-        usernameCapitalized,
-        rutina,
-        loggedUser,
-      });
+      if(rutina.done){
+        const day = rutina.createdAt.getDate()
+        const month = rutina.createdAt.getMonth()+1
+        const year = rutina.createdAt.getFullYear()
+        const date = `${day} / ${month} / ${year} `
+        console.log(date)
+        console.log(month)
+
+        res.render("rutinas/detail", {
+          usernameCapitalized,
+          rutina,
+          loggedUser,
+          workout:rutina.workout,
+          date:date,
+        })
+      }else{
+        res.render("rutinas/detail", {
+          usernameCapitalized,
+          rutina,
+          loggedUser,
+          workout:rutina.workout,
+        });
+      }
+      
     })
     .catch((err) => {
       next(err);
