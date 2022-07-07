@@ -83,6 +83,28 @@ router.post("/add/:idExercise/:idRutina",(req,res,next)=>{
                 res.redirect(`/rutina/${rutina._id}`)
             })
         })
+      })
+    .catch((err)=>{
+      next(err)
+    })  
+  })
+  
+router.get("/rutina/:rutinaId", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  const usernameCapitalized = capitalized(loggedUser.username);
+  Rutina.findById(rutinaId)
+    .populate("workout")
+    .then((rutina) => {
+      res.render("rutinas/detail", {
+        usernameCapitalized,
+        rutina,
+        workout: rutina.workout,
+        loggedUser,
+      });
     })
     .catch((err)=>{
         next(err)
@@ -147,6 +169,25 @@ router.post("/rutina/:rutinaId/delete", (req, res, next) => {
   });
 });
 
+router.get("/rutina/:rutinaId/edit", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  console.log(loggedUser.username);
+  const usernameCapitalized = capitalized(loggedUser.username);
+  Rutina.findById(rutinaId)
+    .then((rutina) => {
+      res.render("rutinas/editName", {
+        usernameCapitalized,
+        rutina,
+        loggedUser,
+      });
+    })
+    .catch((error) => next(error));
+});
+
 router.post("/rutina/:rutinaId/edit", (req, res, next) => {
   const { rutinaId } = req.params;
   const loggedUser = req.session.user;
@@ -187,4 +228,4 @@ router.post("/start/:rutinaId", (req,res,next)=>{
   })
 })
 
-module.exports = router;
+module.exports = router

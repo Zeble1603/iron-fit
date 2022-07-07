@@ -12,24 +12,44 @@
     <link rel="stylesheet" href="/stylesheets/style.css" />
   </head>
 
-  <body><ul style="list-style: none;">
-      <li id="to-right">
-        <a href="/">Home</a>
-        <a href="/exercises">Exercises</a>
-        {{#if loggedUser}}
-          <a href="/profile">My Profile</a>
-          <a href="/logout">Logout</a>
-        {{else}}
-          <a href="/signup">Signup</a>
-          <a href="/login">Login</a>
-        {{/if}}
+  <body>
+    <div class="nav-container">
+      <a href="/profile" class="anchor-button">Bienvenido
+        {{usernameCapitalized}}</a>
+      <ul style="list-style: none;">
+        <li id="to-right">
+          <a href="/">Home</a>
+          <a href="/exercises">Exercises</a>
+          {{#if loggedUser}}
+            <a href="/profile">My Profile</a>
+            <a href="/logout">Logout</a>
+          {{else}}
+            <a href="/signup">Signup</a>
+            <a href="/login">Login</a>
+          {{/if}}
 
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
 
     {{{body}}}
-    
+    <footer>
+      <div class="copyright">
+        <p>Copyright 2022 - All rights reserved</p>
+        <div class="linkedin">
+          <a class="mr" href="https://www.linkedin.com/in/blaisedecarvalho/">
+            Blaise
+          </a>
+          <a href="https://www.linkedin.com/in/christiangecchelin"/>
+          Christian</a>
+          </div>
+      </div>
+      <div>
+        <a href="https://github.com/Zeble1603/iron-fit">
+        <img src="/images/github.png" alt="" />
+        </a>
+      </div>
+    </footer>
     <script src="/js/script.js"></script>
   </body>
-
 </html>

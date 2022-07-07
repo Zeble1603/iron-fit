@@ -5,6 +5,15 @@ const myApiService = new ApiService();
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/exercises", (req, res, next) => {
+  let loggedUser;
+  let usernameCapitalized;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  if (req.session.user) {
+    loggedUser = req.session.user;
+    usernameCapitalized = capitalized(loggedUser.username);
+  }
   myApiService
     .getAllBodyParts()
     .then((allBodyParts) => {
@@ -17,7 +26,8 @@ router.get("/exercises", (req, res, next) => {
               allBodyParts: allBodyParts.data,
               allTargetMuscles: allTargetMuscles.data,
               allEquipments: allEquipments.data,
-              loggedUser: req.session.user,
+              usernameCapitalized,
+              loggedUser,
             });
           });
         });
@@ -31,6 +41,12 @@ router.get("/exercises", (req, res, next) => {
 router.get("/exercises/:rutinaId", (req, res, next) => {
   const loggedUser = req.session.user
   const { rutinaId } = req.params;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  console.log(loggedUser.username);
+  const usernameCapitalized = capitalized(loggedUser.username);
+  console.log(usernameCapitalized);
   myApiService.getAllBodyParts().then((allBodyParts) => {
     myApiService.getTargetMuscles().then((allTargetMuscles) => {
       myApiService.getEquipment().then((allEquipments) => {
@@ -41,7 +57,8 @@ router.get("/exercises/:rutinaId", (req, res, next) => {
             allTargetMuscles: allTargetMuscles.data,
             allEquipments: allEquipments.data,
             rutinaId: rutinaId,
-            loggedUser
+            usernameCapitalized,
+            loggedUser,
           });
         });
       });
@@ -51,11 +68,19 @@ router.get("/exercises/:rutinaId", (req, res, next) => {
 
 router.get("/exercises/exercise-detail/:id", (req, res, next) => {
   const { id } = req.params;
-  const loggedUser = req.session.user
+  const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  const usernameCapitalized = capitalized(loggedUser.username);
   myApiService
     .getExerciseById(id)
     .then((exercise) => {
-      res.render("exercises/exercise-detail", { exercise: exercise.data, loggedUser });
+      res.render("exercises/exercise-detail", {
+        usernameCapitalized,
+        exercise: exercise.data,
+        loggedUser,
+      });
     })
     .catch((err) => {
       next(err);
