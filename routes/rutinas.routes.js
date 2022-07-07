@@ -195,6 +195,7 @@ router.post("/stop/:rutinaId", (req,res,next)=>{
       User.findOne({username:sessionUser.username})
       .then((dbUser)=>{
         dbUser.rutinasRealizadas.push(rutinaDone)
+        dbUser.save()
         console.log(dbUser)
         res.redirect(`/rutina/${rutinaDone._id}`)
       })  

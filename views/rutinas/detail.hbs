@@ -1,23 +1,35 @@
 <div class="container-detail">
   <p class="card-title">{{rutina.name}}</p>
-
+  {{#if ../rutina.done}}
+  <p class="card-title">{{rutina.timer}}</p>
+  {{/if}}
   <button hidden id="timerButton" value="stop"></button>
   {{#each workout }}
     <div class="workout-row">
       <div class="title-container">
         <p class="exercise-name">{{name}}</p>
       </div>
-      <div class="input-container">
-      <form action="/edit/{{_id}}/{{../rutina._id}}" method="POST">
-      {{#if workout.needtime}}
-      <input name="time" class="input-workout" type="number" value="{{time}}"/><span>Time</span>
+      {{#if ../rutina.done}}
+        <div class="value-container">
+          {{#if workout.needtime}}
+            <p>{{time}}</p>
+          {{else}}
+            <p>Rep. : {{repetition}} | Kg. : {{weight}}</p>
+          {{/if}}
+        </div>
       {{else}}
-      <input name="repetition" class="input-workout" type="number" value="{{repetition}}"/><span>Rep.</span>
-      <input name="weight" class="input-workout" type="number" value="{{weight}}"/><span>Kg.</span>
+        <div class="input-container">
+          <form action="/edit/{{_id}}/{{../rutina._id}}" method="POST">
+          {{#if workout.needtime}}
+          <input name="time" class="input-workout" type="number" value="{{time}}"/><span>Time</span>
+          {{else}}
+          <input name="repetition" class="input-workout" type="number" value="{{repetition}}"/><span>Rep.</span>
+          <input name="weight" class="input-workout" type="number" value="{{weight}}"/><span>Kg.</span>
+          {{/if}}
+          <button type="submit" class="anchor-button">Save</button>
+          </form>
+        </div>
       {{/if}}
-      <button type="submit" class="anchor-button">Save</button>
-      </form>
-      </div>
       <div class="button-container">
         <a class="anchor-button" href="/workout/{{_id}}/{{../rutina._id}}">Exercise detail</a>
         {{#if ../rutina.started}}
@@ -25,12 +37,15 @@
           <button type="submit" class="anchor-button">Done</button>
         </form>  
         {{/if}}
-        <form action="/delete/{{_id}}/{{../rutina._id}}" method="POST">
-          <button type="submit" class="anchor-button">Delete</button>
-        </form>
+        {{#unless ../rutina.done}}
+          <form action="/delete/{{_id}}/{{../rutina._id}}" method="POST">
+            <button type="submit" class="anchor-button">Delete</button>
+          </form>
+        {{/unless}}
       </div>
     </div>
   {{/each}}
+  {{#unless ../rutina.done}}
   {{#if rutina.started}}
     <form action="/stop/{{rutina._id}}" method="POST">
       <input hidden id="counter" name="counter">
@@ -44,5 +59,6 @@
   {{/if}}
   <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an
     exercise</a>
+  {{/unless}}
 </div>
 <script src="/js/rutina.script.js"></script>
