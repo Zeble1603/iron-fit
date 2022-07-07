@@ -1,14 +1,37 @@
-<h2>Bienvenido {{loggedUser.username}} !</h2>
+<div class="container-detail">
+  <p class="card-title">{{rutina.name}}</p>
 
-<h3>Mis plantillas:</h3>
-{{!-- {{#each loggedUser.rutinas}} --}}
-<div class="cards-container">
-  {{#each rutinas}}
-    <div class="rutina-container">
-      <p class="card-title">{{name}}</p>
-      <a href="/rutina/{{_id}}" class="anchor-button">Detalles</a>
+  <button hidden id="timerButton" value="stop"></button>
+  {{#each workout }}
+    <div class="workout-row">
+      <div class="title-container">
+        <p class="exercise-name">{{name}}</p>
+      </div>
+      <div class="input-container">
+      <form action="/edit/{{_id}}/{{../rutina._id}}" method="POST">
+      {{#if workout.needtime}}
+      <input name="time" class="input-workout" type="number" value="{{time}}"/><span>Time</span>
+      {{else}}
+      <input name="repetition" class="input-workout" type="number" value="{{repetition}}"/><span>Rep.</span>
+      <input name="weight" class="input-workout" type="number" value="{{weight}}"/><span>Kg.</span>
+      {{/if}}
+      <button type="submit" class="anchor-button">Save</button>
+      </form>
+      </div>
+      <div class="button-container">
+        <a class="anchor-button" href="/workout/{{_id}}/{{../rutina._id}}">Exercise detail</a>
+        {{#if ../rutina.started}}
+        <form action="/done/{{_id}}/{{../rutina._id}}" method="POST">
+          <button type="submit" class="anchor-button">Done</button>
+        </form>  
+        {{/if}}
+        <form action="/delete/{{_id}}/{{../rutina._id}}" method="POST">
+          <button type="submit" class="anchor-button">Delete</button>
+        </form>
+      </div>
     </div>
   {{/each}}
+<<<<<<< HEAD
   <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an
     exercise</a>
   <div class="rutina-container">
@@ -20,10 +43,23 @@
         placeholder="Name your new Rutina"
       />
       <button type="submit" class="anchor-button">Add Rutina</button>
+=======
+  {{#if rutina.started}}
+    <form action="/stop/{{rutina._id}}" method="POST">
+      <button id="stopButton" class="start-button anchor-button">Stop</button>
+>>>>>>> 69b488fbfcbe4b81261a12228c96623c9251474a
     </form>
-  </div>
+    <p id="chrono">00:00</p>
+    {{ else }}
+    <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an exercise</a>
+    <form action="/start/{{rutina._id}}" method="POST">
+      <button id="startButton" class="start-button anchor-button">Start</button>
+    </form>
+  {{/if}}
+  
 </div>
 
+<<<<<<< HEAD
 <h3>Historial:</h3>
 {{!-- {{#each loggedUser.rutinasRealizadas}} --}}
 <div class="cards-container">
@@ -42,3 +78,6 @@
 
 </div>
 {{!-- {{/each}} --}}
+=======
+<script src="/js/rutina.script.js"></script>
+>>>>>>> 69b488fbfcbe4b81261a12228c96623c9251474a

@@ -39,8 +39,8 @@ router.get("/exercises", (req, res, next) => {
 });
 
 router.get("/exercises/:rutinaId", (req, res, next) => {
-  const { rutinaId } = req.params;
   const loggedUser = req.session.user;
+  const { rutinaId } = req.params;
   const capitalized = (string) => {
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
   };
@@ -89,4 +89,5 @@ router.get("/exercises/exercise-detail/:id", (req, res, next) => {
       next(err);
     });
 });
+
 module.exports = router;

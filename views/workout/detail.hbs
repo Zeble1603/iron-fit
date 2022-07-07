@@ -1,0 +1,20 @@
+<div class="box-detail">
+  <h4 class="card-title">{{workout.name}}</h4>
+  <div class="detail-container">
+
+    <div class="key-container">
+      <p class="key">Body part</p>
+      <p class="key">Target Muscle</p>
+      <p class="key">Equipment</p>
+    </div>
+    <div class="answer-container">
+      <p class="answer">{{workout.type}}</p>
+      <p class="answer">{{workout.target}}</p>
+      <p class="answer">{{workout.equipment}}</p>
+    </div>
+
+    <img src={{workout.gifUrl}} alt="{{workout.name}}" />
+
+  </div>
+  <a href="/rutina/{{rutina._id}}" class="anchor-button">Back to my rutina</a>
+</div>
