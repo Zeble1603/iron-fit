@@ -31,10 +31,30 @@
       </div>
     </div>
   {{/each}}
+<<<<<<< HEAD
   {{#if rutina.started}}
     <form action="/stop/{{rutina._id}}" method="POST">
       <input type="number" id="counter" name="counter">
       <button id="stopButton" class="start-button anchor-button">Stop</button>
+=======
+<<<<<<< HEAD
+  <a href="/exercises/{{rutina._id}}" class="anchor-button add-workout">Add an
+    exercise</a>
+  <div class="rutina-container">
+    <form action="/new-rutina" method="POST">
+      <input
+        id="rutinaNameInput"
+        type="text"
+        name="rutinaName"
+        placeholder="Name your new Rutina"
+      />
+      <button type="submit" class="anchor-button">Add Rutina</button>
+=======
+  {{#if rutina.started}}
+    <form action="/stop/{{rutina._id}}" method="POST">
+      <button id="stopButton" class="start-button anchor-button">Stop</button>
+>>>>>>> 69b488fbfcbe4b81261a12228c96623c9251474a
+>>>>>>> 9ef6f0ea4107a018d9684ac55114828ae2a1ca05
     </form>
     <p id="chrono">00:00</p>
     {{ else }}
@@ -46,4 +66,34 @@
   
 </div>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 <script src="/js/rutina.script.js"></script>
+=======
+=======
+>>>>>>> 9ef6f0ea4107a018d9684ac55114828ae2a1ca05
+<h3>Historial:</h3>
+{{!-- {{#each loggedUser.rutinasRealizadas}} --}}
+<div class="cards-container">
+  <div class="rutina-container">
+    <p class="card-title">Rutina Name</p>
+    <a href="" class="anchor-button">Detalles</a>
+  </div>
+  <div class="rutina-container">
+    <p class="card-title">Rutina Name</p>
+    <a href="" class="anchor-button">Detalles</a>
+  </div>
+  <div class="rutina-container">
+    <p class="card-title">Rutina Name</p>
+    <a href="" class="anchor-button">Detalles</a>
+  </div>
+
+</div>
+{{!-- {{/each}} --}}
+<<<<<<< HEAD
+>>>>>>> d353d93da7bc35b8ec7b0f7754582acaef726a85
+=======
+=======
+<script src="/js/rutina.script.js"></script>
+>>>>>>> 69b488fbfcbe4b81261a12228c96623c9251474a
+>>>>>>> 9ef6f0ea4107a018d9684ac55114828ae2a1ca05
