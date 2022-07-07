@@ -10,16 +10,16 @@ router.get("/profile", isLoggedIn, (req, res) => {
   const capitalized = (string) => {
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
   };
-  console.log(loggedUser.username);
   const usernameCapitalized = capitalized(loggedUser.username);
-  console.log(usernameCapitalized);
   User.findOne({ username: loggedUser.username })
     .populate("rutinas")
+    .populate("rutinasRealizadas")
     .then((dbUser) => {
       console.log("mi usuario", dbUser);
       res.render("user/profile", {
         usernameCapitalized,
         rutinas: dbUser.rutinas,
+        doneRutinas: dbUser.rutinasRealizadas,
         loggedUser,
       });
     });

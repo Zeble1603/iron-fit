@@ -31,14 +31,13 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
   const capitalized = (string) => {
     return string[0].toUpperCase() + string.slice(1).toLowerCase();
   };
+  console.log(loggedUser.username);
   const usernameCapitalized = capitalized(loggedUser.username);
   Rutina.findById(rutinaId)
-    .populate("workout")
     .then((rutina) => {
-      res.render("rutinas/detail", {
+      res.render("rutinas/editName", {
         usernameCapitalized,
         rutina,
-        workout: rutina.workout,
         loggedUser,
       });
     })
@@ -55,6 +54,7 @@ router.post("/new-rutina", (req, res, next) => {
     .then((dbUser) => {
       Rutina.create({
         name: rutinaName,
+        done:false,
       }).then((newRutina) => {
         dbUser.rutinas.push(newRutina);
         dbUser.save();
@@ -157,25 +157,6 @@ router.post("/rutina/:rutinaId/delete", (req, res, next) => {
     });
 });
 
-router.get("/rutina/:rutinaId/edit", (req, res, next) => {
-  const { rutinaId } = req.params;
-  const loggedUser = req.session.user;
-  const capitalized = (string) => {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
-  };
-  console.log(loggedUser.username);
-  const usernameCapitalized = capitalized(loggedUser.username);
-  Rutina.findById(rutinaId)
-    .then((rutina) => {
-      res.render("rutinas/editName", {
-        usernameCapitalized,
-        rutina,
-        loggedUser,
-      });
-    })
-    .catch((error) => next(error));
-});
-
 router.post("/rutina/:rutinaId/edit", (req, res, next) => {
   const { rutinaId } = req.params;
   const loggedUser = req.session.user;
@@ -190,22 +171,36 @@ router.post("/rutina/:rutinaId/edit", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-router.post("/stop/:rutinaId", (req, res, next) => {
-  const { counter } = req.body;
-  const { rutinaId } = req.params;
-  Rutina.findByIdAndUpdate(
-    rutinaId,
-    { started: false, timer: counter },
-    { new: true }
-  )
-    .then((rutina) => {
-      rutina.save();
-      res.redirect(`/rutina/${rutinaId}`);
+router.post("/stop/:rutinaId", (req,res,next)=>{
+  const {counter} = req.body
+  const {rutinaId} = req.params
+  const sessionUser = req.session.user
+
+  Rutina.findByIdAndUpdate(rutinaId,
+    {started:false,timer:counter},{new:true})
+  .then((motherRutina)=>{
+    motherRutina.save()
+    Rutina.create({
+      name:motherRutina.name,
+      timer:motherRutina.timer,
+      done:true,
+      started:false,
+      workout: motherRutina.workout
     })
-    .catch((err) => {
-      next(err);
-    });
-});
+    .then((rutinaDone)=>{
+      User.findOne({username:sessionUser.username})
+      .then((dbUser)=>{
+        dbUser.rutinasRealizadas.push(rutinaDone)
+        dbUser.save()
+        console.log(dbUser)
+        res.redirect(`/rutina/${rutinaDone._id}`)
+      })  
+    })
+  })  
+  .catch((err)=>{
+    next(err)
+  })
+})
 
 router.post("/start/:rutinaId", (req, res, next) => {
   const { rutinaId } = req.params;

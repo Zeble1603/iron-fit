@@ -14,7 +14,7 @@ function addToChrono() {
     const chronoElt = document.getElementById('chrono')
     chronoElt.innerHTML = `${minutesToWrite}:${secondsToWrite}`
     const counterElt = document.getElementById('counter')
-    counterElt.value = `${counter}`
+    counterElt.value = `${minutesToWrite}:${secondsToWrite}`
     timer()
 }
 
