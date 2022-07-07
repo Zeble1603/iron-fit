@@ -11,10 +11,10 @@ router.get("/", (req, res, next) => {
   if (req.session.user) {
     loggedUser = req.session.user;
     usernameCapitalized = capitalized(loggedUser.username);
+    res.render("index", { usernameCapitalized, loggedUser });
+  }else{
+    res.render("index");
   }
-
-  console.log(usernameCapitalized);
-  res.render("index", { usernameCapitalized, loggedUser });
 });
 
 module.exports = router;
