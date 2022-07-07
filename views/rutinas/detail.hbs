@@ -33,11 +33,6 @@
       {{/if}}
       <div class="button-container">
         <a class="anchor-button" href="/workout/{{_id}}/{{../rutina._id}}">Exercise detail</a>
-        {{#if ../rutina.started}}
-        <form action="/done/{{_id}}/{{../rutina._id}}" method="POST">
-          <button type="submit" class="anchor-button">Done</button>
-        </form>  
-        {{/if}}
         {{#unless ../rutina.done}}
           <form action="/delete/{{_id}}/{{../rutina._id}}" method="POST">
             <button type="submit" class="anchor-button">Delete</button>
