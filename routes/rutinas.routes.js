@@ -6,13 +6,37 @@ const Rutina = require("../models/Rutina.model");
 const Workout = require("../models/Workout.model");
 
 //GET ROUTES
+
+router.get("/rutina/:rutinaId/edit", (req, res, next) => {
+  const { rutinaId } = req.params;
+  const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  const usernameCapitalized = capitalized(loggedUser.username);
+  Rutina.findById(rutinaId)
+    .then((rutina) => {
+      res.render("rutinas/editName", {
+        usernameCapitalized,
+        loggedUser,
+        rutina,
+      });
+    })
+    .catch((error) => next(error));
+});
+
 router.get("/rutina/:rutinaId", (req, res, next) => {
   const { rutinaId } = req.params;
   const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  const usernameCapitalized = capitalized(loggedUser.username);
   Rutina.findById(rutinaId)
     .populate("workout")
     .then((rutina) => {
       res.render("rutinas/detail", {
+        usernameCapitalized,
         rutina,
         workout: rutina.workout,
         loggedUser,
@@ -20,20 +44,7 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    })
-    .catch((err) => {
-      next(err);
     });
-});
-
-router.get("/rutina/:rutinaId/edit", (req, res, next) => {
-  const { rutinaId } = req.params;
-  const loggedUser = req.session.user;
-  Rutina.findById(rutinaId)
-    .then((rutina) => {
-      res.render("rutinas/editName", { loggedUser, rutina });
-    })
-    .catch((error) => next(error));
 });
 
 //POST ROUTES
@@ -55,60 +66,39 @@ router.post("/new-rutina", (req, res, next) => {
     });
 });
 
-router.get("/rutina/:rutinaId", (req, res, next) => {
-  const { rutinaId } = req.params;
-  const loggedUser = req.session.user;
-  const capitalized = (string) => {
-    return string[0].toUpperCase() + string.slice(1).toLowerCase();
-  };
-  console.log(loggedUser.username);
-  const usernameCapitalized = capitalized(loggedUser.username);
-  Rutina.findById(rutinaId)
-    .populate("workout")
+router.post("/add/:idExercise/:idRutina", (req, res, next) => {
+  const { idExercise, idRutina } = req.params;
+  Rutina.findById(idRutina)
     .then((rutina) => {
-      res.render("rutinas/detail", {
-        usernameCapitalized,
-        rutina,
-        workout: rutina.workout,
-        loggedUser,
+      myApiService.getExerciseById(idExercise).then((exercise) => {
+        let type = exercise.data.bodyPart;
+        let name = exercise.data.name;
+        let equipment = exercise.data.equipment;
+        let gifUrl = exercise.data.gifUrl;
+        let target = exercise.data.target;
+        Workout.create({
+          name: name,
+          type: type,
+          equipment: equipment,
+          target: target,
+          gifUrl: gifUrl,
+        }).then((workout) => {
+          if (workout.type === "cardio") {
+            workout.needtime = true;
+          } else {
+            workout.needtime = false;
+          }
+          workout.save();
+          rutina.workout.push(workout);
+          rutina.save();
+          res.redirect(`/rutina/${rutina._id}`);
+        });
       });
-
-      router.post("/add/:idExercise/:idRutina", (req, res, next) => {
-        const { idExercise, idRutina } = req.params;
-        Rutina.findById(idRutina)
-          .then((rutina) => {
-            myApiService.getExerciseById(idExercise).then((exercise) => {
-              let type = exercise.data.bodyPart;
-              let name = exercise.data.name;
-              let equipment = exercise.data.equipment;
-              let gifUrl = exercise.data.gifUrl;
-              let target = exercise.data.target;
-              Workout.create({
-                name: name,
-                type: type,
-                equipment: equipment,
-                target: target,
-                gifUrl: gifUrl,
-              }).then((workout) => {
-                if (workout.type === "cardio") {
-                  workout.needtime = true;
-                } else {
-                  workout.needtime = false;
-                }
-                workout.save();
-                rutina.workout.push(workout);
-                rutina.save();
-                res.redirect(`/rutina/${rutina._id}`);
-              });
-            });
-          })
-          .catch((err) => {
-            next(err);
-          });
-      });
+    })
+    .catch((err) => {
+      next(err);
     });
 });
-
 router.post("/delete/:idWorkout/:idRutina", (req, res, next) => {
   const { idWorkout, idRutina } = req.params;
   Workout.findByIdAndDelete(idWorkout)
@@ -158,16 +148,15 @@ router.post("/done/:idWorkout/:idRutina", (req, res, next) => {
 router.post("/rutina/:rutinaId/delete", (req, res, next) => {
   const loggedUser = req.session.user;
   const { rutinaId } = req.params;
-  User.findOne({ username: loggedUser.username }).then((dbUser) => {
-    Rutina.findByIdAndDelete(rutinaId)
-      .then((response) => {
-        dbUser.rutinas.pop(response);
-        dbUser.save();
-        res.redirect("/profile");
-      })
-      .catch((error) => next(error));
-  });
+  Rutina.findByIdAndDelete(rutinaId)
+    .then((response) => {
+      res.redirect("/profile");
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
+
 router.get("/rutina/:rutinaId/edit", (req, res, next) => {
   const { rutinaId } = req.params;
   const loggedUser = req.session.user;
@@ -202,8 +191,13 @@ router.post("/rutina/:rutinaId/edit", (req, res, next) => {
 });
 
 router.post("/stop/:rutinaId", (req, res, next) => {
+  const { counter } = req.body;
   const { rutinaId } = req.params;
-  Rutina.findByIdAndUpdate(rutinaId, { started: false }, { new: true })
+  Rutina.findByIdAndUpdate(
+    rutinaId,
+    { started: false, timer: counter },
+    { new: true }
+  )
     .then((rutina) => {
       rutina.save();
       res.redirect(`/rutina/${rutinaId}`);

@@ -46,6 +46,7 @@
         <td id="bodyPart">{{bodyPart}}</td>
         <td id="targetMuscle">{{target}}</td>
         <td id="equipment">{{equipment}}</td>
+        {{#if ../rutinaId}}
           <td id="button-addWorkout">
             <form action="/add/{{id}}/{{../rutinaId}}" method="POST">
               <button class=" button is-primary is-outlined is-responsive anchor-button">
@@ -53,6 +54,13 @@
               </button>
             </form>
           </td>
+          {{ else }}
+          <td id="button-addWorkout">
+            <button class=" button is-primary is-outlined is-responsive anchor-button">
+              <a href="/addtorutina/{{id}}">Add to rutina</a>
+            </button>
+          </td>
+        {{/if}}
       </tr>
     {{/each}}
   </tbody>

@@ -32,11 +32,11 @@
     </div>
   {{/each}}
   {{#if rutina.started}}
-    <form action="/stop/{{rutina._id}}" method="POST">
+    <form action="/stop/{{rutina._id}}" method="POST" class="hidden-form">
       <input hidden type="number" id="counter" name="counter">
-      <button id="stopButton" class="start-button anchor-button">Stop</button>
+      <button id="stopButton" class=" anchor-button">Stop</button>
     </form>
-    <p id="chrono">00:00</p>
+    <p id="chrono" class="timer">00:00</p>
   {{ else }}
     <form action="/start/{{rutina._id}}" method="POST">
       <button id="startButton" class="start-button anchor-button">Start</button>

@@ -11,8 +11,10 @@ function addToChrono() {
     secondsToWrite = (seconds<10) ? `0${seconds}` : `${seconds}`
     minutesToWrite = (minutes<10) ? `0${minutes}` : `${minutes}`
     console.log(minutesToWrite,secondsToWrite)
-    const chrono = document.getElementById('chrono')
-    chrono.innerHTML = `${minutesToWrite}:${secondsToWrite}`
+    const chronoElt = document.getElementById('chrono')
+    chronoElt.innerHTML = `${minutesToWrite}:${secondsToWrite}`
+    const counterElt = document.getElementById('counter')
+    counterElt.value = `${counter}`
     timer()
 }
 
