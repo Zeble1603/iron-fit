@@ -34,6 +34,7 @@ ul li {
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 30px;
   color: #ffff00;
   font-size: 2.2rem;
@@ -295,6 +296,7 @@ h2 {
 footer {
   position: relative;
   height: 100px;
+  margin-top: 30px;
 }
 footer .copyright {
   display: flex;
@@ -346,7 +348,8 @@ tr {
   color: white;
   font-size: 1.8rem;
 }
-.form-container input {
+.form-container input,
+.container-add form input {
   padding: 5px 10px;
   border-radius: 10px;
   text-align: center;
@@ -426,8 +429,35 @@ tr {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid white;
-  padding: 20px 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  margin: 20px 50px;
+  padding: 0px 30px;
+  gap: 50px;
+  box-shadow: 5px 5px 15px 5px rgba(255, 255, 255, 0.1);
+  width: 30%;
+  min-width: 340px;
+  height: 500px;
+}
+.container-add {
+  margin-top: 50px;
+
+  width: 100%;
+}
+.container-add form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.container-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 25px;
 }
 h3 {
   margin: 50px 100px;
@@ -552,4 +582,7 @@ h3 {
 .gordito {
   width: 200px;
   text-align: center;
+}
+.swiper-wrapper {
+  height: 500px !important;
 }

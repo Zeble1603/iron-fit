@@ -72,6 +72,7 @@ router.get("/rutina/:rutinaId", (req, res, next) => {
         workout: rutina.workout,
         loggedUser,
       });
+
       router.post("/add/:idExercise/:idRutina", (req, res, next) => {
         const { idExercise, idRutina } = req.params;
         Rutina.findById(idRutina)
