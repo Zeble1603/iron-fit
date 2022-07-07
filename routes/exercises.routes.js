@@ -3,6 +3,9 @@ const authRoutes = require("./auth.routes");
 const ApiService = require("../services/api.service");
 const myApiService = new ApiService();
 const isLoggedIn = require("../middleware/isLoggedIn");
+const User = require("../models/User.model");
+const Rutina = require("../models/Rutina.model");
+const Workout = require("../models/Workout.model");
 
 router.get("/exercises", (req, res, next) => {
   let loggedUser;
@@ -86,5 +89,65 @@ router.get("/exercises/exercise-detail/:id", (req, res, next) => {
       next(err);
     });
 });
+
+router.get("/addtorutina/:id", (req,res,next)=>{
+  const { id } = req.params;
+  const loggedUser = req.session.user;
+  const capitalized = (string) => {
+    return string[0].toUpperCase() + string.slice(1).toLowerCase();
+  };
+  const usernameCapitalized = capitalized(loggedUser.username);
+  User.findOne({username:loggedUser.username})
+  .populate("rutinas")
+  .then((user)=>{
+    res.render("exercises/form", {
+      usernameCapitalized,
+      idExercise: id,
+      loggedUser,
+      rutinas:user.rutinas
+    })
+  })
+  .catch((err)=>{
+    next(err)
+  })  
+})
+
+router.post("/addtorutina/:idExercise", (req,res,next)=>{
+  const {idExercise} = req.params
+  const {selectRutina} = req.body
+  Rutina.findById(selectRutina)
+  .then((rutina)=>{
+    myApiService.getExerciseById(idExercise)
+    .then((exercise)=>{
+      let type = exercise.data.bodyPart
+      let name = exercise.data.name
+      let equipment = exercise.data.equipment
+      let gifUrl = exercise.data.gifUrl
+      let target = exercise.data.target
+      Workout.create({
+        name:name,
+        type:type,
+        equipment:equipment,
+        target:target,
+        gifUrl:gifUrl,
+      })
+      .then((workout)=>{
+        if(workout.type === "cardio"){
+          workout.needtime = true
+        }else{
+            workout.needtime = false
+        }
+        workout.save()
+        rutina.workout.push(workout)
+        rutina.save()
+        res.redirect(`/rutina/${selectRutina}`)
+      })
+    })
+  })
+  .catch((err)=>{
+    next(err)
+  })
+})
+
 
 module.exports = router;

@@ -1,0 +1,10 @@
+<h2 class="user-title">Select the routine</h2>
+
+<form action="/addtorutina/{{idExercise}}" method="POST" class="form-container">
+  <select name="selectRutina" id="">
+    {{#each rutinas }}
+        <option value="{{_id}}">{{name}} // {{_id}}</option>
+    {{/each}}
+  </select>  
+  <button type="submit"> Add exercise to routine</button>
+</form>
