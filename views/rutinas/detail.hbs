@@ -33,6 +33,7 @@
   {{/each}}
   {{#if rutina.started}}
     <form action="/stop/{{rutina._id}}" method="POST">
+      <input type="number" id="counter" name="counter">
       <button id="stopButton" class="start-button anchor-button">Stop</button>
     </form>
     <p id="chrono">00:00</p>

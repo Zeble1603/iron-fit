@@ -162,9 +162,10 @@ router.post("/rutina/:rutinaId/edit", (req, res, next) => {
 });
 
 router.post("/stop/:rutinaId", (req,res,next)=>{
+  const {counter} = req.body
   const {rutinaId} = req.params
   Rutina.findByIdAndUpdate(rutinaId,
-    {started:false},{new:true})
+    {started:false,timer:counter},{new:true})
   .then((rutina)=>{
     rutina.save()
     res.redirect(`/rutina/${rutinaId}`)
